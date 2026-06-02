@@ -104,7 +104,7 @@ export default function SavedDrawer({
         </div>
 
         {/* Lista */}
-        <div className="flex-1 overflow-y-auto p-4 bg-red-500/60">
+        <div className="flex-1 overflow-y-auto p-4 bg-black">
           {items.length === 0 ? (
             <EmptyState tab={tab} onClose={onClose} />
           ) : (
