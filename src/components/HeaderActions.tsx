@@ -66,29 +66,7 @@ export default function HeaderActions() {
         </button>
       </div>
 
-      {/* Botón flotante (visible cuando hay reserva) */}
-      {reservaCount > 0 && !open ? (
-        <button
-          type="button"
-          onClick={() => openTab("reserva")}
-          className="fixed bottom-5 right-5 z-50 flex items-center gap-2 rounded-full bg-ember-500 px-5 py-3.5 font-semibold text-black shadow-ember transition hover:bg-ember-400 active:scale-95 sm:hidden"
-          aria-label={`Ver mi reserva (${reservaCount})`}
-        >
-          <svg
-            viewBox="0 0 24 24"
-            className="h-5 w-5"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
-            <path d="M3 6h18M16 10a4 4 0 0 1-8 0" />
-          </svg>
-          Reserva · {reservaCount}
-        </button>
-      ) : null}
+     
 
       <SavedDrawer
         open={open}
