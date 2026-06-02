@@ -67,9 +67,9 @@ export default function SavedDrawer({
         role="dialog"
         aria-modal="true"
         aria-label={tab === "reserva" ? "Mi reserva" : "Favoritos"}
-        className={`absolute right-0 top-0 flex h-full w-full max-w-md flex-col border-l border-white/10 bg-ink-900 shadow-card transition-transform duration-300 ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`absolute right-0 top-0 flex h-full w-full max-w-[700px] flex-col border-l border-white/10 bg-ink-900 shadow-card transition-transform duration-300 ${
+  	open ? "translate-x-0" : "translate-x-full"
+	}`}
       >
         {/* Encabezado + tabs */}
         <div className="border-b border-white/5 p-4">
