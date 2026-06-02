@@ -67,9 +67,9 @@ export default function SavedDrawer({
         role="dialog"
   aria-modal="true"
   aria-label={tab === "reserva" ? "Mi reserva" : "Favoritos"}
-  className={`fixed right-0 top-0 z-[9999] flex h-screen w-[700px] flex-col border-l border-white/10 bg-ink-900 shadow-card transition-transform duration-300 ${
-    open ? "translate-x-0" : "translate-x-full"
-  }`}
+  className={`fixed right-0 top-0 z-[9999] flex h-screen w-full max-w-[500px] flex-col border-l border-white/10 bg-ink-900 shadow-card transition-transform duration-300 ${
+  open ? "translate-x-0" : "translate-x-full"
+}`}
       >
         {/* Encabezado + tabs */}
         <div className="border-b border-white/5 p-4">
@@ -135,7 +135,7 @@ export default function SavedDrawer({
               href={waHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-ember-500 px-6 py-3.5 font-semibold text-black transition-all duration-300 hover:bg-ember-400 hover:shadow-ember active:scale-[0.98]"
+              className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-ember-500/70 px-6 py-3.5 font-semibold text-black transition-all duration-300 hover:bg-ember-400 hover:shadow-ember active:scale-[0.98]"
             >
               <WhatsAppIcon className="h-5 w-5" />
               Consultar por WhatsApp ({reserva.length})
