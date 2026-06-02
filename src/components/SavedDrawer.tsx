@@ -210,13 +210,11 @@ function DrawerItem({
         className="relative h-20 w-16 shrink-0 overflow-hidden rounded-lg border border-white/10"
       >
         {figure.cover_url ? (
-          <Image
-            src={figure.cover_url}
-            alt={figure.name}
-            fill
-            sizes="64px"
-            className="object-cover"
-          />
+          <img
+  src={figure.cover_url ?? ""}
+  alt={figure.name}
+  className="h-full w-full object-cover"
+/>
         ) : (
           <ImagePlaceholder label={figure.name} />
         )}
