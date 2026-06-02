@@ -104,7 +104,7 @@ export default function SavedDrawer({
         </div>
 
         {/* Lista */}
-        <div className="flex-1 overflow-y-auto p-4 bg-red-500">
+        <div className="flex-1 overflow-y-auto p-4 bg-red-500/60">
           {items.length === 0 ? (
             <EmptyState tab={tab} onClose={onClose} />
           ) : (
@@ -135,7 +135,7 @@ export default function SavedDrawer({
               href={waHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-ember-500/70 px-6 py-3.5 font-semibold text-black transition-all duration-300 hover:bg-ember-400 hover:shadow-ember active:scale-[0.98]"
+              className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-ember-500 px-6 py-3.5 font-semibold text-black transition-all duration-300 hover:bg-ember-400 hover:shadow-ember active:scale-[0.98]"
             >
               <WhatsAppIcon className="h-5 w-5" />
               Consultar por WhatsApp ({reserva.length})
