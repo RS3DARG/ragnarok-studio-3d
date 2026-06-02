@@ -16,7 +16,7 @@ export default function Logo({
         src="/logo.svg"          // tu archivo en public/
         alt="Ragnarok Studio 3D"
         height={height}
-        width={height * 4}        // ajustá la proporción real de tu logo
+        width={height * 8}        // ajustá la proporción real de tu logo
         priority
         className="w-auto"
         style={{ height }}
