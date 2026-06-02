@@ -203,7 +203,7 @@ function DrawerItem({
   onAddToReserva: () => void;
 }) {
   return (
-    <li className="flex gap-3 rounded-2xl border border-white/5 bg-ink-850 p-3">
+    <li className="flex gap-3 rounded-2xl border border-black/10 bg-white p-3">
       <Link
         href={`/figura/${figure.slug}`}
         onClick={onClose}
