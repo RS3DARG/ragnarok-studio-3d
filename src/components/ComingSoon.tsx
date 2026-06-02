@@ -24,7 +24,7 @@ export default function ComingSoon({
         </h2>
 
         <div className="mt-8">
-          <Countdown targetDate="2025-12-01T00:00:00" />
+          <Countdown targetDate="2026-06-05T00:00:00" />
         </div>
 
         <p className="mt-4 text-sm text-zinc-500">
