@@ -19,14 +19,13 @@ export default function Logo({
       aria-label="Ragnarok Studio 3D — Inicio"
       className={`group inline-flex items-center gap-3 ${className}`}
     >
-      <svg
-        width={dims.icon}
-        height={dims.icon}
-        viewBox="0 0 48 48"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="shrink-0"
-      >
+      <Image
+  src="/logo.svg"
+  alt="Ragnarok Studio 3D"
+  width={dims.icon * 3}
+  height={dims.icon}
+  className="shrink-0 object-contain"
+/>
         <path
           d="M24 2 4 13v22l20 11 20-11V13L24 2Z"
           stroke="#ff6a00"
