@@ -28,6 +28,17 @@ export default function SettingsForm({
   const [paymentMethods, setPaymentMethods] = useState(
     initial.payment_methods ?? ""
   );
+const [launchDate, setLaunchDate] = useState(
+  initial.launch_date ?? "2026-06-05T00:00:00"
+);
+
+const [launchTitle, setLaunchTitle] = useState(
+  initial.launch_title ?? "Próximo lanzamiento exclusivo"
+);
+
+const [launchEnabled, setLaunchEnabled] = useState(
+  initial.launch_enabled ?? "true"
+);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -39,6 +50,10 @@ export default function SettingsForm({
         hero_subtitle: heroSubtitle,
         payment_intro: paymentIntro,
         payment_methods: paymentMethods,
+
+	launch_date: launchDate,
+  	launch_title: launchTitle,
+  	launch_enabled: launchEnabled,
       });
       if (!res.ok) {
         setError(res.error || "No se pudo guardar.");
@@ -104,6 +119,52 @@ export default function SettingsForm({
           </p>
         </div>
       </section>
+
+
+      {/* CONTADOR DE PRÓXIMO LANZAMIENTO */}
+      <section className="space-y-5 rounded-2xl border border-white/5 bg-ink-900 p-5">
+        <h2 className="font-display text-lg font-semibold uppercase tracking-wide text-white">
+          Próximo lanzamiento
+        </h2>
+
+        <div>
+          <label className={labelClass}>Mostrar contador</label>
+          <select
+            className={inputClass}
+            value={launchEnabled}
+            onChange={(e) => setLaunchEnabled(e.target.value)}
+          >
+            <option value="true">Sí</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+
+        <div>
+          <label className={labelClass}>Título</label>
+          <input
+            className={inputClass}
+            value={launchTitle}
+            onChange={(e) => setLaunchTitle(e.target.value)}
+            placeholder="Próximo lanzamiento exclusivo"
+          />
+        </div>
+
+        <div>
+          <label className={labelClass}>Fecha y hora</label>
+          <input
+            type="datetime-local"
+            className={inputClass}
+            value={launchDate}
+            onChange={(e) => setLaunchDate(e.target.value)}
+          />
+        </div>
+      </section>
+
+      {error ? (
+        <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300 ring-1 ring-inset ring-red-500/20">
+          {error}
+        </p>
+      ) : null}
 
       {error ? (
         <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300 ring-1 ring-inset ring-red-500/20">
