@@ -120,7 +120,6 @@ const [launchEnabled, setLaunchEnabled] = useState(
         </div>
       </section>
 
-
       {/* CONTADOR DE PRÓXIMO LANZAMIENTO */}
       <section className="space-y-5 rounded-2xl border border-white/5 bg-ink-900 p-5">
         <h2 className="font-display text-lg font-semibold uppercase tracking-wide text-white">

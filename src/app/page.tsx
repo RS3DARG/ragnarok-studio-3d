@@ -52,7 +52,10 @@ export default async function HomePage() {
         <Hero title={heroTitle} subtitle={heroSubtitle} slides={heroSlides} />
         <CatalogExplorer figures={figures} categories={categories} />
         <CustomOrder />
-        <ComingSoon items={upcoming} />
+        <ComingSoon
+  items={upcoming}
+  settings={settings}
+/>
         <PaymentMethods intro={paymentIntro} methods={paymentMethods} />
         <Faq items={faq} />
       </main>

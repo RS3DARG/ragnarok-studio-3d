@@ -4,10 +4,20 @@ import Countdown from "./Countdown";
 
 export default function ComingSoon({
   items,
+  settings,
 }: {
   items: UpcomingFigure[];
+  settings: Record<string, string>;
 }) {
   if (!items.length) return null;
+
+const launchEnabled = settings.launch_enabled !== "false";
+
+const launchDate =
+  settings.launch_date || "2026-06-05T00:00:00";
+
+const launchTitle =
+  settings.launch_title || "Próximo lanzamiento exclusivo";
 
   return (
     <section
@@ -23,14 +33,16 @@ export default function ComingSoon({
           Próximamente
         </h2>
 
-        <div className="mt-8 flex flex-col items-center">
-  	<Countdown targetDate="2026-06-05T00:00:00" />
+        {launchEnabled && (
+  <div className="mt-8 flex flex-col items-center">
+    <Countdown targetDate={launchDate} />
 
-  	<p className="mt-6 text-sm text-zinc-500">
-    	Próximo lanzamiento exclusivo
-  	</p>
-	</div>
-	</div>
+    <p className="mt-6 text-sm text-zinc-500">
+      {launchTitle}
+    </p>
+  </div>
+)}
+
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {items.map((item) => (
           <article
