@@ -35,9 +35,9 @@ export default function FigureCard({ figure }: { figure: Figure }) {
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-ink-950/10 to-transparent opacity-80" />
-          <div className="absolute left-3 top-3">
-            <StatusBadge status={figure.status} />
-          </div>
+          <div className="absolute bottom-3 left-3">
+  <StatusBadge status={figure.status} />
+</div>
         </div>
 
         <div className="flex flex-1 flex-col p-4">
