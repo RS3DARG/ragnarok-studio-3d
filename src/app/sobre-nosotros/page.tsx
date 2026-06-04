@@ -23,16 +23,16 @@ export default async function SobreNosotrosPage() {
       <Header />
       <main>
         {/* HERO */}
-        <section className="relative overflow-hidden border-b border-white/5 bg-ink-950">
+        <section className="relative overflow-hidden border-b border-white/5 bg-ink-950 min-h-[50vh]">
           {a.heroImage ? (
             <div className="absolute inset-0">
               <Image src={a.heroImage} alt="" fill priority sizes="100vw" className="object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-b from-ink-950/80 via-ink-950/70 to-ink-950" />
+              <div className="absolute inset-0 bg-gradient-to-b from-ink-950/40 via-ink-950/30 to-ink-950/80" />
             </div>
           ) : (
             <div className="pointer-events-none absolute inset-0 bg-grid-faint [background-size:46px_46px] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,#000_40%,transparent_100%)]" />
           )}
-          <div className="relative mx-auto max-w-4xl px-4 py-20 text-center sm:px-6 sm:py-28">
+          <div className="relative mx-auto max-w-4xl px-4 pb-8 pt-32 text-center sm:px-6 sm:pb-12 sm:pt-40">
             <p className="font-display text-sm uppercase tracking-[0.3em] text-ember-400">
               Ragnarok Studio 3D
             </p>

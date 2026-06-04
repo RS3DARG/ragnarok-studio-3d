@@ -5,12 +5,9 @@ import MobileMenu from "./MobileMenu";
 
 const NAV = [
   { href: "/catalogo", label: "Catálogo" },
-  { href: "/#proximamente", label: "Próximamente" },
+  { href: "/", label: "Inicio" },
   { href: "/sobre-nosotros", label: "Sobre nosotros" },
-  { href: "/#pagos", label: "Métodos de pago" },
-  { href: "/#faq", label: "FAQ" },
 ];
-
 export default function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-ink-950/95 backdrop-blur-xl">

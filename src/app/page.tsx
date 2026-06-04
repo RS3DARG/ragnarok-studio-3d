@@ -115,9 +115,13 @@ export default async function HomePage() {
           instagramEnabled={instagramEnabled}
         />
         <CatalogExplorer figures={previewFigures} totalCount={totalCount} />
-        <ComingSoon items={upcoming} settings={settings} />
+        <div id="proximamente">
+          <ComingSoon items={upcoming} settings={settings} />
+        </div>
         <Newsletter settings={settings} />
-        <PaymentMethods intro={paymentIntro} methods={paymentMethods} />
+        <div id="pagos">
+          <PaymentMethods intro={paymentIntro} methods={paymentMethods} />
+        </div>
         {/*
 <InstagramSection
   url={settings.instagram_url}
@@ -126,7 +130,9 @@ export default async function HomePage() {
   enabled={false}
 />
 */}
-        <Faq items={faq} />
+        <div id="faq">
+  <Faq items={faq} />
+</div>
       </main>
       <Footer />
     </>

@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import { whatsappLink } from "@/lib/utils";
+import { useRouter, usePathname } from "next/navigation";
 
 export default function MobileMenu({
   links,
@@ -14,21 +15,29 @@ export default function MobileMenu({
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
   const touchStartX = useRef(0);
+  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => setMounted(true), []);
 
-  useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-      requestAnimationFrame(() => setVisible(true));
-    } else {
-      setVisible(false);
-      const t = setTimeout(() => {
-        document.body.style.overflow = "";
-      }, 300);
-      return () => clearTimeout(t);
+ useEffect(() => {
+  const id = sessionStorage.getItem("scrollTo");
+  if (!id) return;
+  sessionStorage.removeItem("scrollTo");
+  
+  let attempts = 0;
+  const interval = setInterval(() => {
+    const el = document.getElementById(id);
+    if (el) {
+      clearInterval(interval);
+      el.scrollIntoView({ behavior: "smooth" });
     }
-  }, [open]);
+    attempts++;
+    if (attempts > 20) clearInterval(interval);
+  }, 300);
+
+  return () => clearInterval(interval);
+}, []);
 
   function onTouchStart(e: React.TouchEvent) {
     touchStartX.current = e.touches[0].clientX;
@@ -38,6 +47,34 @@ export default function MobileMenu({
     const diff = e.changedTouches[0].clientX - touchStartX.current;
     if (diff > 60) setOpen(false);
   }
+
+  function handleNavClick(e: React.MouseEvent, href: string) {
+  if (href.startsWith("/#")) {
+    e.preventDefault();
+    const id = href.replace("/#", "");
+    setOpen(false);
+    if (pathname === "/") {
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    } else {
+      window.location.assign("/" );
+      sessionStorage.setItem("scrollTo", id);
+    }
+  } else {
+    setOpen(false);
+  }
+}
+
+useEffect(() => {
+  const id = sessionStorage.getItem("scrollTo");
+  if (id) {
+    sessionStorage.removeItem("scrollTo");
+    setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    }, 800);
+  }
+}, []);
 
   const waHref = whatsappLink("Hola Ragnarok Studio 3D, quiero hacer una consulta.");
 
@@ -86,12 +123,12 @@ export default function MobileMenu({
           padding: "20px 20px 16px",
           borderBottom: "1px solid rgba(255,255,255,0.06)",
         }}>
-         <span
-  className="font-display font-bold uppercase tracking-[0.2em] text-ember-400"
-  style={{ fontSize: "1.75rem", marginLeft: "24px" }}
->
-  Menú
-</span>
+          <span
+            className="font-display font-bold uppercase tracking-[0.2em] text-ember-400"
+            style={{ fontSize: "1.75rem", marginLeft: "24px" }}
+          >
+            Menú
+          </span>
           <button
             type="button"
             onClick={() => setOpen(false)}
@@ -110,8 +147,9 @@ export default function MobileMenu({
             <div key={item.href}>
               <Link
                 href={item.href}
-                onClick={() => setOpen(false)}
-                className="flex items-center rounded-xl pl-12 pr-4 py-4 text-lg font-medium text-zinc-200 transition hover:bg-white/5 hover:text-ember-300">
+                onClick={(e) => handleNavClick(e, item.href)}
+                className="flex items-center rounded-xl pl-8 pr-4 py-4 text-lg font-medium text-zinc-200 transition hover:bg-white/5 hover:text-ember-300"
+              >
                 {item.label}
               </Link>
               {i < links.length - 1 ? (
@@ -125,7 +163,7 @@ export default function MobileMenu({
           ))}
         </div>
 
-       
+     
       </nav>
     </>
   ) : null;
