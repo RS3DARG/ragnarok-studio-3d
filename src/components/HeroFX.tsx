@@ -79,10 +79,15 @@ export default function HeroFX({
         section.style.setProperty("--hero-mx", nx.toFixed(4));
         section.style.setProperty("--hero-my", ny.toFixed(4));
       }
-      if (glowOn && glowRef.current) {
-        glowRef.current.style.opacity = visible ? "1" : "0";
-        glowRef.current.style.transform = `translate3d(${(gx - 320).toFixed(1)}px, ${(gy - 320).toFixed(1)}px, 0)`;
-      }
+     if (glowOn) {
+  const glow = glowRef.current;
+
+  if (glow) {
+    glow.style.opacity = visible ? "1" : "0";
+    glow.style.transform =
+      `translate3d(${(gx - 320).toFixed(1)}px, ${(gy - 320).toFixed(1)}px, 0)`;
+  }
+}
       raf = requestAnimationFrame(tick);
     }
 
