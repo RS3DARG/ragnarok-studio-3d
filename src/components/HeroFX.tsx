@@ -118,8 +118,7 @@ export default function HeroFX({
     const canvas = canvasRef.current;
     const root = rootRef.current;
     if (!canvas || !root) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const ctx = canvas.getContext("2d")!;
 
     const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
     const coarse = window.matchMedia?.("(pointer: coarse)").matches;
@@ -161,13 +160,26 @@ export default function HeroFX({
     }
 
     function resize() {
-      const rect = root.getBoundingClientRect();
-      W = rect.width; H = rect.height;
-      canvas.width = Math.max(1, Math.floor(W * dpr));
-      canvas.height = Math.max(1, Math.floor(H * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      if (!parts.length) seed();
-    }
+  const currentRoot = rootRef.current;
+  const currentCanvas = canvasRef.current;
+
+  if (!currentRoot || !currentCanvas) return;
+
+  const rect = currentRoot.getBoundingClientRect();
+
+  W = rect.width;
+  H = rect.height;
+
+  currentCanvas.width = Math.max(1, Math.floor(W * dpr));
+  currentCanvas.height = Math.max(1, Math.floor(H * dpr));
+
+  const currentCtx = canvas?.getContext("2d");
+if (!currentCtx) return;
+
+currentCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+  if (!parts.length) seed();
+}
     resize();
 
     function paint(animate: boolean) {
