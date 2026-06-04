@@ -173,10 +173,7 @@ export default function HeroFX({
   currentCanvas.width = Math.max(1, Math.floor(W * dpr));
   currentCanvas.height = Math.max(1, Math.floor(H * dpr));
 
-  const currentCtx = canvas?.getContext("2d");
-if (!currentCtx) return;
-
-currentCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
   if (!parts.length) seed();
 }
