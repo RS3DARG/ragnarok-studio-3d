@@ -65,7 +65,7 @@ export default async function SobreNosotrosPage() {
             </h2>
             <ol className="relative space-y-6 border-l border-white/10 pl-6">
               {a.steps.map((step, i) => (
-                <li key={i} className="relative">
+                <li key={i} className="relative pl-4">
                   <span className="absolute -left-[31px] flex h-8 w-8 items-center justify-center rounded-full bg-ember-500 font-display text-sm font-bold text-black">
                     {i + 1}
                   </span>
