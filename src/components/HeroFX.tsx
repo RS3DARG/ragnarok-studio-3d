@@ -60,17 +60,24 @@ export default function HeroFX({
     let raf = 0, visible = false;
 
     function onMove(e: MouseEvent) {
-      const rect = (section ?? root).getBoundingClientRect();
-      if (
-        e.clientX < rect.left || e.clientX > rect.right ||
-        e.clientY < rect.top || e.clientY > rect.bottom
-      ) { visible = false; return; }
-      visible = true;
-      tnx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      tny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-      tgx = e.clientX - rect.left;
-      tgy = e.clientY - rect.top;
-    }
+  const rect = root.getBoundingClientRect();
+
+  if (
+    e.clientX < rect.left ||
+    e.clientX > rect.right ||
+    e.clientY < rect.top ||
+    e.clientY > rect.bottom
+  ) {
+    visible = false;
+    return;
+  }
+
+  visible = true;
+  tnx = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+  tny = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
+  tgx = e.clientX - rect.left;
+  tgy = e.clientY - rect.top;
+}
 
     function tick() {
       nx += (tnx - nx) * 0.08; ny += (tny - ny) * 0.08;
