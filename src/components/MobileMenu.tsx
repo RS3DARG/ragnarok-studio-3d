@@ -20,24 +20,35 @@ export default function MobileMenu({
 
   useEffect(() => setMounted(true), []);
 
- useEffect(() => {
-  const id = sessionStorage.getItem("scrollTo");
-  if (!id) return;
-  sessionStorage.removeItem("scrollTo");
-  
-  let attempts = 0;
-  const interval = setInterval(() => {
-    const el = document.getElementById(id);
-    if (el) {
-      clearInterval(interval);
-      el.scrollIntoView({ behavior: "smooth" });
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+      requestAnimationFrame(() => setVisible(true));
+    } else {
+      setVisible(false);
+      const t = setTimeout(() => {
+        document.body.style.overflow = "";
+      }, 300);
+      return () => clearTimeout(t);
     }
-    attempts++;
-    if (attempts > 20) clearInterval(interval);
-  }, 300);
+  }, [open]);
 
-  return () => clearInterval(interval);
-}, []);
+  useEffect(() => {
+    const id = sessionStorage.getItem("scrollTo");
+    if (!id) return;
+    sessionStorage.removeItem("scrollTo");
+    let attempts = 0;
+    const interval = setInterval(() => {
+      const el = document.getElementById(id);
+      if (el) {
+        clearInterval(interval);
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+      attempts++;
+      if (attempts > 20) clearInterval(interval);
+    }, 300);
+    return () => clearInterval(interval);
+  }, []);
 
   function onTouchStart(e: React.TouchEvent) {
     touchStartX.current = e.touches[0].clientX;
@@ -49,38 +60,27 @@ export default function MobileMenu({
   }
 
   function handleNavClick(e: React.MouseEvent, href: string) {
-  if (href.startsWith("/#")) {
-    e.preventDefault();
-    const id = href.replace("/#", "");
-    setOpen(false);
-    if (pathname === "/") {
-      setTimeout(() => {
-        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-      }, 300);
+    if (href.startsWith("/#")) {
+      e.preventDefault();
+      const id = href.replace("/#", "");
+      setOpen(false);
+      if (pathname === "/") {
+        setTimeout(() => {
+          document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+        }, 300);
+      } else {
+        sessionStorage.setItem("scrollTo", id);
+        window.location.assign("/");
+      }
     } else {
-      window.location.assign("/" );
-      sessionStorage.setItem("scrollTo", id);
+      setOpen(false);
     }
-  } else {
-    setOpen(false);
   }
-}
-
-useEffect(() => {
-  const id = sessionStorage.getItem("scrollTo");
-  if (id) {
-    sessionStorage.removeItem("scrollTo");
-    setTimeout(() => {
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-    }, 800);
-  }
-}, []);
 
   const waHref = whatsappLink("Hola Ragnarok Studio 3D, quiero hacer una consulta.");
 
   const menu = open ? (
     <>
-      {/* Backdrop con fade */}
       <div
         onClick={() => setOpen(false)}
         style={{
@@ -92,8 +92,6 @@ useEffect(() => {
           transition: "opacity 300ms ease",
         }}
       />
-
-      {/* Panel con slide desde la derecha */}
       <nav
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
@@ -115,7 +113,6 @@ useEffect(() => {
           transition: "transform 300ms cubic-bezier(0.4, 0, 0.2, 1)",
         }}
       >
-        {/* Header del panel */}
         <div style={{
           display: "flex",
           alignItems: "center",
@@ -141,7 +138,6 @@ useEffect(() => {
           </button>
         </div>
 
-        {/* Links */}
         <div style={{ flex: 1, padding: "12px" }}>
           {links.map((item, i) => (
             <div key={item.href}>
@@ -162,14 +158,12 @@ useEffect(() => {
             </div>
           ))}
         </div>
-
-     
       </nav>
     </>
   ) : null;
 
   return (
-    <div className="lg:hidden">
+    <div className="flex lg:hidden">
       <button
         type="button"
         onClick={() => setOpen(true)}
