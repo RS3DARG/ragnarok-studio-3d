@@ -13,7 +13,7 @@ const NAV = [
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-ink-950/70 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-ink-950/95 backdrop-blur-xl">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ember-500/40 to-transparent" />
 
       <div className="mx-auto flex max-w-[90rem] items-center justify-between gap-6 px-4 py-3 sm:px-6 lg:px-8">

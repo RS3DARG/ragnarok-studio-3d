@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
+import { whatsappLink } from "@/lib/utils";
 
 export default function MobileMenu({
   links,
@@ -9,14 +11,124 @@ export default function MobileMenu({
   links: { href: string; label: string }[];
 }) {
   const [open, setOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const touchStartX = useRef(0);
 
-  // Bloquea el scroll del fondo cuando está abierto
+  useEffect(() => setMounted(true), []);
+
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
+    if (open) {
+      document.body.style.overflow = "hidden";
+      requestAnimationFrame(() => setVisible(true));
+    } else {
+      setVisible(false);
+      const t = setTimeout(() => {
+        document.body.style.overflow = "";
+      }, 300);
+      return () => clearTimeout(t);
+    }
   }, [open]);
+
+  function onTouchStart(e: React.TouchEvent) {
+    touchStartX.current = e.touches[0].clientX;
+  }
+
+  function onTouchEnd(e: React.TouchEvent) {
+    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    if (diff > 60) setOpen(false);
+  }
+
+  const waHref = whatsappLink("Hola Ragnarok Studio 3D, quiero hacer una consulta.");
+
+  const menu = open ? (
+    <>
+      {/* Backdrop con fade */}
+      <div
+        onClick={() => setOpen(false)}
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 99998,
+          backgroundColor: "rgba(0,0,0,0.6)",
+          opacity: visible ? 1 : 0,
+          transition: "opacity 300ms ease",
+        }}
+      />
+
+      {/* Panel con slide desde la derecha */}
+      <nav
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        style={{
+          position: "fixed",
+          top: 0,
+          right: 0,
+          bottom: 0,
+          width: "82%",
+          maxWidth: "320px",
+          zIndex: 99999,
+          backgroundColor: "#09090a",
+          borderLeft: "1px solid rgba(255,255,255,0.08)",
+          display: "flex",
+          flexDirection: "column",
+          boxShadow: "0 25px 50px rgba(0,0,0,0.8)",
+          overflowY: "auto",
+          transform: visible ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 300ms cubic-bezier(0.4, 0, 0.2, 1)",
+        }}
+      >
+        {/* Header del panel */}
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "20px 20px 16px",
+          borderBottom: "1px solid rgba(255,255,255,0.06)",
+        }}>
+         <span
+  className="font-display font-bold uppercase tracking-[0.2em] text-ember-400"
+  style={{ fontSize: "1.75rem", marginLeft: "24px" }}
+>
+  Menú
+</span>
+          <button
+            type="button"
+            onClick={() => setOpen(false)}
+            aria-label="Cerrar menú"
+            className="flex h-9 w-9 items-center justify-center rounded-lg text-zinc-400 transition hover:text-ember-300"
+          >
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <path d="M18 6 6 18M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Links */}
+        <div style={{ flex: 1, padding: "12px" }}>
+          {links.map((item, i) => (
+            <div key={item.href}>
+              <Link
+                href={item.href}
+                onClick={() => setOpen(false)}
+                className="flex items-center rounded-xl pl-12 pr-4 py-4 text-lg font-medium text-zinc-200 transition hover:bg-white/5 hover:text-ember-300">
+                {item.label}
+              </Link>
+              {i < links.length - 1 ? (
+                <div style={{
+                  height: "1px",
+                  backgroundColor: "rgba(255,255,255,0.05)",
+                  margin: "0 16px",
+                }} />
+              ) : null}
+            </div>
+          ))}
+        </div>
+
+       
+      </nav>
+    </>
+  ) : null;
 
   return (
     <div className="lg:hidden">
@@ -32,44 +144,7 @@ export default function MobileMenu({
         </svg>
       </button>
 
-      {open ? (
-        <div className="fixed inset-0 z-[60]" role="dialog" aria-modal="true">
-          <button
-            type="button"
-            aria-label="Cerrar menú"
-            onClick={() => setOpen(false)}
-            className="absolute inset-0 bg-ink-950/80 backdrop-blur-sm"
-          />
-          <nav className="absolute right-0 top-0 flex h-full w-[82%] max-w-xs flex-col gap-1 border-l border-white/10 bg-ink-900 p-5 shadow-2xl">
-            <div className="mb-4 flex items-center justify-between">
-              <span className="font-display text-sm uppercase tracking-[0.3em] text-ember-400">
-                Menú
-              </span>
-              <button
-                type="button"
-                onClick={() => setOpen(false)}
-                aria-label="Cerrar menú"
-                className="flex h-9 w-9 items-center justify-center rounded-lg text-zinc-300 transition hover:bg-white/5 hover:text-ember-300"
-              >
-                <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                  <path d="M18 6 6 18M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {links.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => setOpen(false)}
-                className="rounded-xl px-4 py-3 text-base font-medium text-zinc-200 transition hover:bg-white/5 hover:text-ember-300"
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      ) : null}
+      {mounted ? createPortal(menu, document.body) : null}
     </div>
   );
 }

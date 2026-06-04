@@ -4,7 +4,7 @@
   "private": true,
   "description": "Plataforma de figuras coleccionables impresas en 3D - Ragnarok Studio 3D",
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

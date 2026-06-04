@@ -11,7 +11,7 @@ try {
 const csp = [
   "default-src 'self'",
   // Next inyecta scripts inline en producción; sin nonce usamos 'unsafe-inline'.
-  "script-src 'self' 'unsafe-inline'",
+  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
@@ -32,7 +32,7 @@ const securityHeaders = [
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   {
     key: "Permissions-Policy",
-    value: "camera=(), microphone=(), geolocation=(), interest-cohort=()",
+value: "camera=(), microphone=(), geolocation=()",
   },
   {
     key: "Strict-Transport-Security",

@@ -14,6 +14,7 @@ import {
   getUpcoming,
   getFaq,
   getSettings,
+
 } from "@/lib/data";
 import { BRAND, toSavedFigure } from "@/lib/utils";
 import { parseHeroSlides } from "@/lib/hero";
@@ -41,13 +42,15 @@ export default async function HomePage() {
       getSettings(),
     ]);
 
+	console.log("hero_background_image:", settings.hero_background_image);
+
   const heroTitle = settings.hero_title || BRAND.tagline;
   const heroSubtitle =
     settings.hero_subtitle ||
     "Esculturas, bustos, dioramas y llaveros de tus franquicias favoritas.";
 
   // Hero Premium
-  const heroBackground = settings.hero_background_image || null;
+  const heroBackground = settings.hero_background_image || "/Inicio.png";
   const heroOverlayOpacity = (() => {
     const n = parseFloat(settings.hero_overlay_opacity ?? "");
     return Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : 0.6;
