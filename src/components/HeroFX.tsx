@@ -60,7 +60,10 @@ export default function HeroFX({
     let raf = 0, visible = false;
 
     function onMove(e: MouseEvent) {
-  const rect = root.getBoundingClientRect();
+  const currentRoot = rootRef.current;
+  if (!currentRoot) return;
+
+  const rect = currentRoot.getBoundingClientRect();
 
   if (
     e.clientX < rect.left ||
