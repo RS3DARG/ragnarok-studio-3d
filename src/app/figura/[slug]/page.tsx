@@ -52,7 +52,9 @@ export async function generateMetadata({
   const description =
     figure.description ||
     `${figure.name} en figura coleccionable impresa en 3D con acabado profesional. ${BRAND.name}.`;
-  const images = figure.cover_url ? [{ url: figure.cover_url }] : undefined;
+  const ogImages = figure.cover_url
+    ? [{ url: figure.cover_url, width: 800, height: 1000, alt: title }]
+    : [{ url: `${SITE_URL}/og-default.webp`, width: 1200, height: 630, alt: BRAND.name }];
 
   return {
     title,
@@ -63,13 +65,15 @@ export async function generateMetadata({
       title: `${title} | ${BRAND.name}`,
       description,
       url: `${SITE_URL}/figura/${figure.slug}`,
-      images,
+      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title: `${title} | ${BRAND.name}`,
       description,
-      images: figure.cover_url ? [figure.cover_url] : undefined,
+      images: figure.cover_url
+        ? [figure.cover_url]
+        : [`${SITE_URL}/og-default.webp`],
     },
   };
 }
