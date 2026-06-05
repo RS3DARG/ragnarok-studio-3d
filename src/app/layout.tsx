@@ -43,18 +43,27 @@ export const metadata: Metadata = {
   ],
   applicationName: BRAND.name,
   authors: [{ name: BRAND.name }],
-  openGraph: {
+   openGraph: {
     type: "website",
     locale: "es_AR",
     url: SITE_URL,
     siteName: BRAND.name,
     title: `${BRAND.name} — ${BRAND.tagline}`,
     description: BRAND.description,
+    images: [
+      {
+        url: `${SITE_URL}/og-default.webp`,
+        width: 1200,
+        height: 630,
+        alt: BRAND.name,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${BRAND.name} — ${BRAND.tagline}`,
     description: BRAND.description,
+    images: [`${SITE_URL}/og-default.webp`],
   },
   robots: {
     index: true,
