@@ -16,11 +16,11 @@ export default function AboutProcessStep({
 
   return (
     <li className="relative">
-      <span className="absolute -left-[31px] flex h-8 w-8 items-center justify-center rounded-full bg-ember-500 font-display text-sm font-bold text-black">
-        {index + 1}
-      </span>
-
-      <div className="rounded-2xl border border-white/5 bg-ink-950 px-5 py-4">
+      <span className="absolute -left-[43px] flex h-8 w-8 items-center justify-center rounded-full bg-ember-500 font-display text-sm font-bold text-black">
+  {index + 1}
+</span>
+	
+      <div className="rounded-2xl border border-white/5 bg-ink-950 px-6 py-5">
         <button
           type="button"
           onClick={() => hasExtra && setOpen((o) => !o)}
@@ -42,7 +42,7 @@ export default function AboutProcessStep({
               <p className="text-zinc-400">{step.description}</p>
             ) : null}
             {step.image ? (
-              <div className="relative aspect-video max-w-md overflow-hidden rounded-xl border border-white/10">
+              <div className="relative mt-4 aspect-[4/5] max-w-sm overflow-hidden rounded-xl border border-white/10">
                 <Image
                   src={step.image}
                   alt={step.title}
