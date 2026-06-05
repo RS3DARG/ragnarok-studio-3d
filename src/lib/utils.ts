@@ -2,7 +2,8 @@ import type { SavedFigure } from "@/lib/types";
 
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000";
-export const WHATSAPP_NUMBER = "5492994101115";
+export const WHATSAPP_NUMBER =
+  (process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "").replace(/[^0-9]/g, "");
 
 export const BRAND = {
   name: "Ragnarok Studio 3D",
