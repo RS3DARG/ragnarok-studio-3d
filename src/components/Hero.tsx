@@ -27,12 +27,10 @@ export type HeroProps = {
   particleSpeed?: number;
   cursorGlowEnabled?: boolean;
   parallaxEnabled?: boolean;
-  // Card destacada: slides con info propia (configurable desde el admin)
   cardSlides?: HeroSlide[];
   cardAutoplay?: boolean;
   cardRotationMs?: number;
   cardIndicators?: boolean;
-  // Instagram
   instagramUrl?: string;
   instagramEnabled?: boolean;
 };
@@ -58,7 +56,6 @@ export default function Hero({
   instagramUrl = "https://instagram.com/ragnarok_studio3d",
   instagramEnabled = true,
 }: HeroProps) {
-  // Modo de la card: slides del admin > figuras destacadas > estático
   const mode: "slides" | "figures" | "static" =
     cardSlides.length > 0 ? "slides" : slides.length > 0 ? "figures" : "static";
   const length = mode === "slides" ? cardSlides.length : slides.length;
@@ -80,6 +77,10 @@ export default function Hero({
   const fig = mode === "figures" ? slides[index] : null;
   const showIndicators =
     length > 1 && (mode === "figures" || (mode === "slides" && cardIndicators));
+
+  // Carga solo la slide activa y la siguiente (evita preload de todas)
+  const shouldRender = (i: number) =>
+    i === index || (length > 0 && i === (index + 1) % length);
 
   const contentStyle = parallaxEnabled
     ? {
@@ -122,7 +123,7 @@ export default function Hero({
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-zinc-300">{subtitle}</p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <a
+            
               href="#catalogo"
               className="inline-flex items-center justify-center rounded-xl bg-ember-500 px-7 py-3.5 font-semibold text-black transition-all duration-300 hover:bg-ember-400 hover:shadow-ember active:scale-[0.98]"
             >
@@ -132,7 +133,7 @@ export default function Hero({
               Consultar por WhatsApp
             </WhatsAppButton>
             {instagramEnabled && instagramUrl ? (
-              <a
+              
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -163,7 +164,7 @@ export default function Hero({
           </dl>
         </div>
 
-        {/* Card destacada (empujada a la derecha) */}
+        {/* Card destacada */}
         <div
           className="relative z-50 w-full animate-fade-in lg:max-w-[440px] lg:justify-self-end"
           style={{ marginTop: "-120px", transform: "scale(1.05)" }}
@@ -182,14 +183,13 @@ export default function Hero({
                         i === index ? "scale-100 opacity-100" : "scale-105 opacity-0"
                       }`}
                     >
-                     {src ? (
+                      {src && shouldRender(i) ? (
                         <Image
                           src={src}
                           alt={s.name || ""}
                           fill
                           sizes="(max-width: 1024px) 100vw, 440px"
                           priority={i === 0}
-                          loading={i === 0 ? "eager" : "lazy"}
                           className="object-cover"
                         />
                       ) : (
@@ -201,7 +201,6 @@ export default function Hero({
 
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/90 via-ink-950/10 to-transparent" />
 
-                {/* Badge de estado de la slide actual */}
                 {cardSlides[index] ? (
                   <span
                     className={`absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ring-1 ring-inset backdrop-blur ${
@@ -213,7 +212,6 @@ export default function Hero({
                   </span>
                 ) : null}
 
-                {/* Info de la slide actual */}
                 {cardSlides[index] ? (
                   <div className="absolute inset-x-4 bottom-4">
                     {cardSlides[index].saga ? (
@@ -240,7 +238,7 @@ export default function Hero({
                       ) : null}
                     </div>
                     {cardSlides[index].name ? (
-                      <a
+                      
                         href={whatsappLink(figureInquiryMessage(cardSlides[index].name))}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -266,14 +264,13 @@ export default function Hero({
                         : "pointer-events-none scale-105 opacity-0"
                     }`}
                   >
-                    {s.cover_url ? (
+                    {s.cover_url && shouldRender(i) ? (
                       <Image
                         src={s.cover_url}
                         alt={`${s.name}${s.saga ? ` — ${s.saga}` : ""}`}
                         fill
                         sizes="(max-width: 1024px) 100vw, 440px"
                         priority={i === 0}
-                        loading={i === 0 ? "eager" : "lazy"}
                         className="object-cover"
                       />
                     ) : (
