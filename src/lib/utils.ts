@@ -36,8 +36,8 @@ export function figureInquiryMessage(figureName: string): string {
 }
 
 /** Mensaje de consulta para una reserva con varias figuras. */
-export function reservationMessage(names: string[]): string {
-  const list = names.map((n) => `• ${n}`).join("\n");
+export function reservationMessage(figures: { name: string; figure_type?: string | null }[]): string {
+  const list = figures.map((f) => `• ${f.name}${f.figure_type ? ` (${f.figure_type})` : ""}`).join("\n");
   return [
     `Hola ${BRAND.name}.`,
     "Me interesan las siguientes figuras:",
@@ -60,6 +60,7 @@ export function toSavedFigure(figure: {
   name: string;
   saga?: string | null;
   cover_url?: string | null;
+  figure_type?: string | null;
 }): SavedFigure {
   return {
     id: figure.id,
@@ -67,6 +68,7 @@ export function toSavedFigure(figure: {
     name: figure.name,
     saga: figure.saga ?? null,
     cover_url: figure.cover_url ?? null,
+    figure_type: figure.figure_type ?? null,
   };
 }
 

@@ -8,12 +8,13 @@ import ShareButton from "./ShareButton";
 
 export default function FigureCard({ figure }: { figure: Figure }) {
   const saved: SavedFigure = {
-    id: figure.id,
-    slug: figure.slug,
-    name: figure.name,
-    saga: figure.saga,
-    cover_url: figure.cover_url,
-  };
+  id: figure.id,
+  slug: figure.slug,
+  name: figure.name,
+  saga: figure.saga,
+  cover_url: figure.cover_url,
+  figure_type: figure.figure_type ?? null,
+};
 
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl bg-ink-850 card-ring transition-all duration-300 hover:-translate-y-1 hover:shadow-card">

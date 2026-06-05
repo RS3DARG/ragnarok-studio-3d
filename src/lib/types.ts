@@ -64,8 +64,9 @@ export interface SavedFigure {
   id: string;
   slug: string;
   name: string;
-  saga: string | null;
-  cover_url: string | null;
+  saga?: string | null;
+  cover_url?: string | null;
+  figure_type?: string | null;
 }
 
 export const STATUS_LABELS: Record<FigureStatus, string> = {

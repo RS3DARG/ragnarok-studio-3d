@@ -48,7 +48,7 @@ export default function SavedDrawer({
   }, [open, onClose]);
 
   const items = tab === "reserva" ? reserva : favorites;
-  const waHref = whatsappLink(reservationMessage(reserva.map((f) => f.name)));
+  const waHref = whatsappLink(reservationMessage(reserva.map((f) => ({ name: f.name, figure_type: f.figure_type }))));
 
   return (
     <div
