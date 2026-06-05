@@ -40,10 +40,6 @@ value: "camera=(), microphone=(), geolocation=()",
   },
 ];
 const nextConfig = {
-  env: {
-    NEXT_PUBLIC_WHATSAPP_NUMBER: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER,
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
-  },
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
