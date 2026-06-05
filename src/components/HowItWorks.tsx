@@ -72,15 +72,8 @@ export default function HowItWorks({
           ))}
         </div>
 
-        <div className="mt-10 text-center">
-          
-            href={whatsappLink("Hola, quiero consultar sobre una figura coleccionable.")}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-xl bg-ember-500 px-7 py-3.5 font-semibold text-black transition hover:bg-ember-400"
-          >
-            Consultar ahora por WhatsApp
-          </a>
+       <div className="mt-10 text-center">
+          <a href={whatsappLink("Hola, quiero consultar sobre una figura coleccionable.")} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-xl bg-ember-500 px-7 py-3.5 font-semibold text-black transition hover:bg-ember-400">{"Consultar ahora por WhatsApp"}</a>
         </div>
       </div>
     </section>
