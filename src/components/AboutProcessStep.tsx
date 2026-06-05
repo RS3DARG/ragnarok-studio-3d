@@ -20,7 +20,7 @@ export default function AboutProcessStep({
         {index + 1}
       </span>
 
-      <div className="pl-6">
+      <div className="rounded-2xl border border-white/5 bg-ink-950 px-5 py-4">
         <button
           type="button"
           onClick={() => hasExtra && setOpen((o) => !o)}

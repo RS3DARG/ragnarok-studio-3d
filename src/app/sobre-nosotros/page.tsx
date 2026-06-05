@@ -64,7 +64,7 @@ export default async function SobreNosotrosPage() {
             <h2 className="mb-10 text-center font-display text-3xl font-bold uppercase tracking-wide text-white">
               {a.processTitle}
             </h2>
-           <ol className="relative space-y-6 border-l border-white/10 pl-6">
+           <ol className="relative space-y-3 border-l border-white/10 pl-6">
   {a.steps.map((step, i) => (
     <AboutProcessStep key={i} step={step} index={i} />
   ))}
