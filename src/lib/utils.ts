@@ -27,8 +27,8 @@ export function slugify(input: string): string {
 
 /** Construye un link de WhatsApp con mensaje pre-cargado. */
 export function whatsappLink(message: string, number = WHATSAPP_NUMBER): string {
-  const base = number ? `https://wa.me/${number}` : "https://wa.me/";
-  return `${base}?text=${encodeURIComponent(message)}`;
+  if (!number) return `https://wa.me/?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
 export function figureInquiryMessage(figureName: string): string {
