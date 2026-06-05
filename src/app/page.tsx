@@ -51,6 +51,7 @@ export default async function HomePage() {
 
   // Hero Premium
   const heroBackground = settings.hero_background_image || "/Inicio.png";
+  const heroBackgroundMobile = settings.hero_background_image_mobile || "";
   const heroOverlayOpacity = (() => {
     const n = parseFloat(settings.hero_overlay_opacity ?? "");
     return Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : 0.6;
@@ -99,6 +100,7 @@ export default async function HomePage() {
           subtitle={heroSubtitle}
           slides={heroSlides}
           backgroundImage={heroBackground}
+          backgroundImageMobile={heroBackgroundMobile}
           overlayOpacity={heroOverlayOpacity}
           particlesEnabled={heroParticles}
           particleCount={heroParticleCount}

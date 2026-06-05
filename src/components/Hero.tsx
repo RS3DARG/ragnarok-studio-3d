@@ -18,6 +18,7 @@ export type HeroProps = {
   subtitle: string;
   slides?: SavedFigure[];
   backgroundImage?: string | null;
+  backgroundImageMobile?: string | null;
   overlayOpacity?: number;
   particlesEnabled?: boolean;
   particleCount?: number;
@@ -41,6 +42,7 @@ export default function Hero({
   subtitle,
   slides = [],
   backgroundImage = null,
+  backgroundImageMobile = null,
   overlayOpacity = 0.6,
   particlesEnabled = true,
   particleCount = 42,
@@ -91,6 +93,7 @@ export default function Hero({
     <section className="relative overflow-hidden bg-ink-950">
       <HeroFX
         backgroundImage={backgroundImage}
+        backgroundImageMobile={backgroundImageMobile}
         overlayOpacity={overlayOpacity}
         particlesEnabled={particlesEnabled}
         particleCount={particleCount}

@@ -29,6 +29,9 @@ export default function HeroPremiumForm({
   const [bg, setBg] = useState<string[]>(
     initial.hero_background_image ? [initial.hero_background_image] : []
   );
+  const [bgMobile, setBgMobile] = useState<string[]>(
+    initial.hero_background_image_mobile ? [initial.hero_background_image_mobile] : []
+  );
   const [overlay, setOverlay] = useState(num(initial.hero_overlay_opacity, 0.6));
   const [glow, setGlow] = useState(initial.hero_cursor_glow_enabled !== "false");
   const [parallax, setParallax] = useState(
@@ -70,6 +73,7 @@ export default function HeroPremiumForm({
     startTransition(async () => {
       const res = await saveSettings({
         hero_background_image: bg[0] ?? "",
+        hero_background_image_mobile: bgMobile[0] ?? "",
         hero_overlay_opacity: String(overlay),
         hero_cursor_glow_enabled: glow ? "true" : "false",
         hero_parallax_enabled: parallax ? "true" : "false",
@@ -116,6 +120,25 @@ export default function HeroPremiumForm({
         <p className="text-xs text-zinc-500">
           Sin imagen, el Hero usa la atmósfera original (grilla + resplandor).
         </p>
+
+        <div className="border-t border-white/5 pt-4">
+          <p className="mb-2 text-sm font-medium text-zinc-300">
+            Imagen de fondo · Mobile (vertical)
+          </p>
+          <p className="mb-3 text-xs text-zinc-500">
+            Versión vertical para celulares, compuesta para encuadre portrait
+            (figura centrada, con aire arriba y abajo). Ideal ~1080×1920px,
+            WebP &lt; 300 KB. Si no cargás ninguna, en mobile se usa la imagen de
+            desktop.
+          </p>
+          <ImageUploader
+            label="Imagen de fondo (mobile)"
+            value={bgMobile}
+            onChange={setBgMobile}
+            multiple={false}
+          />
+        </div>
+      </section>
       </section>
 
       {/* CONFIGURACIÓN VISUAL */}

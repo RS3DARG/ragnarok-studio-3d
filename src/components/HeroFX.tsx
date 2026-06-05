@@ -19,6 +19,7 @@ import Image from "next/image";
  */
 export default function HeroFX({
   backgroundImage,
+  backgroundImageMobile,
   overlayOpacity = 0.6,
   particlesEnabled = true,
   particleCount = 42,
@@ -29,6 +30,7 @@ export default function HeroFX({
   parallaxEnabled = true,
 }: {
   backgroundImage?: string | null;
+  backgroundImageMobile?: string | null;
   overlayOpacity?: number;
   particlesEnabled?: boolean;
   particleCount?: number;
@@ -228,13 +230,27 @@ export default function HeroFX({
   return (
     <div ref={rootRef} aria-hidden className="absolute inset-0 overflow-hidden">
       {backgroundImage ? (
-        <div className="absolute inset-0" style={bgStyle}>
+        <div className="absolute inset-0 hidden md:block" style={bgStyle}>
           <Image
             src={backgroundImage}
             alt=""
             fill
             priority
             quality={85}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
+      ) : null}
+
+      {backgroundImageMobile || backgroundImage ? (
+        <div className="absolute inset-0 md:hidden" style={bgStyle}>
+          <Image
+            src={backgroundImageMobile || backgroundImage || ""}
+            alt=""
+            fill
+            priority
+            quality={90}
             sizes="100vw"
             className="object-cover object-center"
           />
