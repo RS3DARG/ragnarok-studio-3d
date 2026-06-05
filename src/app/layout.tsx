@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   applicationName: BRAND.name,
   authors: [{ name: BRAND.name }],
   icons: {                              // ✅ agregado acá, en el único metadata
-    icon: "/favicon.ico",
+    icon: "/favicon.png",
     apple: "/apple-touch-icon.png",
   },
   openGraph: {
