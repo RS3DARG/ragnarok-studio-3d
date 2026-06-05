@@ -19,26 +19,17 @@ export default function SettingsForm({
   const [error, setError] = useState<string | null>(null);
 
   const [heroTitle, setHeroTitle] = useState(initial.hero_title ?? "");
-  const [heroSubtitle, setHeroSubtitle] = useState(
-    initial.hero_subtitle ?? ""
+  const [heroSubtitle, setHeroSubtitle] = useState(initial.hero_subtitle ?? "");
+  const [paymentIntro, setPaymentIntro] = useState(initial.payment_intro ?? "");
+  const [paymentMethods, setPaymentMethods] = useState(initial.payment_methods ?? "");
+  const [launchDate, setLaunchDate] = useState(initial.launch_date ?? "2026-06-05T00:00:00");
+  const [launchTitle, setLaunchTitle] = useState(initial.launch_title ?? "Próximo lanzamiento exclusivo");
+  const [launchEnabled, setLaunchEnabled] = useState(initial.launch_enabled ?? "true");
+  const [howItWorksEnabled, setHowItWorksEnabled] = useState(initial.how_it_works_enabled ?? "true");
+  const [howItWorksTitle, setHowItWorksTitle] = useState(initial.how_it_works_title ?? "¿Cómo funciona?");
+  const [howItWorksSubtitle, setHowItWorksSubtitle] = useState(
+    initial.how_it_works_subtitle ?? "Tres pasos simples para tener tu figura coleccionable"
   );
-  const [paymentIntro, setPaymentIntro] = useState(
-    initial.payment_intro ?? ""
-  );
-  const [paymentMethods, setPaymentMethods] = useState(
-    initial.payment_methods ?? ""
-  );
-const [launchDate, setLaunchDate] = useState(
-  initial.launch_date ?? "2026-06-05T00:00:00"
-);
-
-const [launchTitle, setLaunchTitle] = useState(
-  initial.launch_title ?? "Próximo lanzamiento exclusivo"
-);
-
-const [launchEnabled, setLaunchEnabled] = useState(
-  initial.launch_enabled ?? "true"
-);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -50,10 +41,12 @@ const [launchEnabled, setLaunchEnabled] = useState(
         hero_subtitle: heroSubtitle,
         payment_intro: paymentIntro,
         payment_methods: paymentMethods,
-
-	launch_date: launchDate,
-  	launch_title: launchTitle,
-  	launch_enabled: launchEnabled,
+        launch_date: launchDate,
+        launch_title: launchTitle,
+        launch_enabled: launchEnabled,
+        how_it_works_enabled: howItWorksEnabled,
+        how_it_works_title: howItWorksTitle,
+        how_it_works_subtitle: howItWorksSubtitle,
       });
       if (!res.ok) {
         setError(res.error || "No se pudo guardar.");
@@ -104,9 +97,7 @@ const [launchEnabled, setLaunchEnabled] = useState(
           />
         </div>
         <div>
-          <label className={labelClass}>
-            Métodos (uno por línea)
-          </label>
+          <label className={labelClass}>Métodos (uno por línea)</label>
           <textarea
             className={`${inputClass} min-h-32 resize-y`}
             value={paymentMethods}
@@ -114,18 +105,15 @@ const [launchEnabled, setLaunchEnabled] = useState(
             placeholder={"Efectivo\nTransferencia\nTarjeta"}
           />
           <p className="mt-1.5 text-xs text-zinc-500">
-            Escribí cada método en una línea separada. Se muestran como tarjetas
-            en el home.
+            Escribí cada método en una línea separada. Se muestran como tarjetas en el home.
           </p>
         </div>
       </section>
 
-      {/* CONTADOR DE PRÓXIMO LANZAMIENTO */}
       <section className="space-y-5 rounded-2xl border border-white/5 bg-ink-900 p-5">
         <h2 className="font-display text-lg font-semibold uppercase tracking-wide text-white">
           Próximo lanzamiento
         </h2>
-
         <div>
           <label className={labelClass}>Mostrar contador</label>
           <select
@@ -137,7 +125,6 @@ const [launchEnabled, setLaunchEnabled] = useState(
             <option value="false">No</option>
           </select>
         </div>
-
         <div>
           <label className={labelClass}>Título</label>
           <input
@@ -147,7 +134,6 @@ const [launchEnabled, setLaunchEnabled] = useState(
             placeholder="Próximo lanzamiento exclusivo"
           />
         </div>
-
         <div>
           <label className={labelClass}>Fecha y hora</label>
           <input
@@ -159,11 +145,40 @@ const [launchEnabled, setLaunchEnabled] = useState(
         </div>
       </section>
 
-      {error ? (
-        <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300 ring-1 ring-inset ring-red-500/20">
-          {error}
-        </p>
-      ) : null}
+      <section className="space-y-5 rounded-2xl border border-white/5 bg-ink-900 p-5">
+        <h2 className="font-display text-lg font-semibold uppercase tracking-wide text-white">
+          Sección ¿Cómo funciona?
+        </h2>
+        <div>
+          <label className={labelClass}>Mostrar sección</label>
+          <select
+            className={inputClass}
+            value={howItWorksEnabled}
+            onChange={(e) => setHowItWorksEnabled(e.target.value)}
+          >
+            <option value="true">Sí</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div>
+          <label className={labelClass}>Título</label>
+          <input
+            className={inputClass}
+            value={howItWorksTitle}
+            onChange={(e) => setHowItWorksTitle(e.target.value)}
+            placeholder="¿Cómo funciona?"
+          />
+        </div>
+        <div>
+          <label className={labelClass}>Subtítulo</label>
+          <input
+            className={inputClass}
+            value={howItWorksSubtitle}
+            onChange={(e) => setHowItWorksSubtitle(e.target.value)}
+            placeholder="Tres pasos simples para tener tu figura coleccionable"
+          />
+        </div>
+      </section>
 
       {error ? (
         <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300 ring-1 ring-inset ring-red-500/20">

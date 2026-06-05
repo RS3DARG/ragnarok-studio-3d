@@ -32,7 +32,7 @@ export default function Footer() {
           <p>
             © {year} {BRAND.name}. Todos los derechos reservados.
           </p>
-          <p>Impresión 3D FDM · Postprocesado artesanal</p>
+          <p>Impresión 3D FDM · Postprocesado artesanal · Alto Valle, Neuquén</p>
         </div>
       </div>
     </footer>

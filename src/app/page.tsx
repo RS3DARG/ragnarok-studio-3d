@@ -7,6 +7,7 @@ import Newsletter from "@/components/Newsletter";
 import InstagramSection from "@/components/InstagramSection";
 import PaymentMethods from "@/components/PaymentMethods";
 import Faq from "@/components/Faq";
+import HowItWorks from "@/components/HowItWorks";
 import {
   getFiguresPreview,
   getFeaturedFigures,
@@ -85,7 +86,9 @@ export default async function HomePage() {
   // Slides del Hero (figuras destacadas)
   const heroSlides = featured.map(toSavedFigure);
 
-  const paymentIntro = settings.payment_intro || "";
+  const howItWorksEnabled = settings.how_it_works_enabled !== "false";
+  const howItWorksTitle = settings.how_it_works_title || "¿Cómo funciona?";
+  const howItWorksSubtitle = settings.how_it_works_subtitle || "Tres pasos simples para tener tu figura coleccionable";
   const paymentMethods = (settings.payment_methods || "")
     .split("\n")
     .map((m) => m.trim())
@@ -115,6 +118,11 @@ export default async function HomePage() {
           cardIndicators={heroCardIndicators}
           instagramUrl={instagramUrl}
           instagramEnabled={instagramEnabled}
+        />
+        <HowItWorks
+          enabled={howItWorksEnabled}
+          title={howItWorksTitle}
+          subtitle={howItWorksSubtitle}
         />
         <CatalogExplorer figures={previewFigures} totalCount={totalCount} />
         <div id="proximamente">

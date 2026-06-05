@@ -7,6 +7,8 @@ const NAV = [
   { href: "/catalogo", label: "Catálogo" },
   { href: "/", label: "Inicio" },
   { href: "/sobre-nosotros", label: "Sobre nosotros" },
+  { href: "/#pagos", label: "Métodos de pago" },
+  { href: "/#faq", label: "FAQ" },
 ];
 export default function Header() {
   return (
