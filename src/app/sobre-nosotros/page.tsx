@@ -59,7 +59,7 @@ export default async function SobreNosotrosPage() {
         </section>
 
         {/* PROCESO */}
-        <section className="border-y border-white/5 bg-ink-900">
+        <section className="border-y border-white/5 bg-ink-950">
           <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
             <h2 className="mb-10 text-center font-display text-3xl font-bold uppercase tracking-wide text-white">
               {a.processTitle}

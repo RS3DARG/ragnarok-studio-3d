@@ -20,7 +20,7 @@ export default function AboutProcessStep({
   {index + 1}
 </span>
 	
-      <div className="rounded-2xl border border-white/5 bg-ink-950 px-6 py-5">
+      <div className="rounded-2xl border border-zinc-600/50 bg-zinc-800/60 px-6 py-5">
         <button
           type="button"
           onClick={() => hasExtra && setOpen((o) => !o)}
@@ -42,7 +42,7 @@ export default function AboutProcessStep({
               <p className="text-zinc-400">{step.description}</p>
             ) : null}
             {step.image ? (
-              <div className="relative mt-4 aspect-[4/5] max-w-sm overflow-hidden rounded-xl border border-white/10">
+              <div className="relative mt-4 aspect-[4/5] max-w-[200px] overflow-hidden rounded-xl border border-white/10">
                 <Image
                   src={step.image}
                   alt={step.title}
