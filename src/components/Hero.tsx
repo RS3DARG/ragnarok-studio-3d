@@ -123,7 +123,7 @@ export default function Hero({
           </h1>
           <p className="mt-5 text-lg leading-relaxed text-zinc-300">{subtitle}</p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <
+            <a
               href="#catalogo"
               className="inline-flex items-center justify-center rounded-xl bg-ember-500 px-7 py-3.5 font-semibold text-black transition-all duration-300 hover:bg-ember-400 hover:shadow-ember active:scale-[0.98]"
             >
@@ -133,7 +133,7 @@ export default function Hero({
               Consultar por WhatsApp
             </WhatsAppButton>
             {instagramEnabled && instagramUrl ? (
-              
+              <a
                 href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -238,7 +238,7 @@ export default function Hero({
                       ) : null}
                     </div>
                     {cardSlides[index].name ? (
-                      
+                      <a
                         href={whatsappLink(figureInquiryMessage(cardSlides[index].name))}
                         target="_blank"
                         rel="noopener noreferrer"
