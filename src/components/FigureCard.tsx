@@ -60,6 +60,13 @@ export default function FigureCard({ figure }: { figure: Figure }) {
             ) : null}
             {figure.height ? <span>{figure.height}</span> : null}
           </div>
+          {figure.price ? (
+            <p className="mt-2 text-sm font-semibold text-ember-300">
+              {figure.price}
+            </p>
+          ) : (
+            <p className="mt-2 text-xs text-zinc-600">Consultar precio</p>
+          )}
         </div>
       </Link>
 
