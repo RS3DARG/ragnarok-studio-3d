@@ -39,8 +39,11 @@ value: "camera=(), microphone=(), geolocation=()",
     value: "max-age=63072000; includeSubDomains; preload",
   },
 ];
-
 const nextConfig = {
+  env: {
+    NEXT_PUBLIC_WHATSAPP_NUMBER: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER,
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
+  },
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
