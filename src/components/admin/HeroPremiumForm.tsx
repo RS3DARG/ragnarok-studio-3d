@@ -139,7 +139,7 @@ export default function HeroPremiumForm({
           />
         </div>
       </section>
-      </section>
+      
 
       {/* CONFIGURACIÓN VISUAL */}
       <section className="space-y-5 rounded-2xl border border-white/5 bg-ink-900 p-5">
