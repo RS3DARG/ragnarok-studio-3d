@@ -22,8 +22,7 @@ import {
 } from "@/lib/utils";
 import type { SavedFigure } from "@/lib/types";
 
-export const dynamicParams = true;
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export async function generateStaticParams() {
   try {
