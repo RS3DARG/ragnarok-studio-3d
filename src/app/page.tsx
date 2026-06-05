@@ -95,10 +95,6 @@ export default async function HomePage() {
   const howItWorksEnabled = settings.how_it_works_enabled !== "false";
   const howItWorksTitle = settings.how_it_works_title || "¿Cómo funciona?";
   const howItWorksSubtitle = settings.how_it_works_subtitle || "Tres pasos simples para tener tu figura coleccionable";
-  const paymentMethods = (settings.payment_methods || "")
-    .split("\n")
-    .map((m) => m.trim())
-    .filter(Boolean);
 
   return (
     <>
