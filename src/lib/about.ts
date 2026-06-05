@@ -3,6 +3,7 @@
 export interface ProcessStep {
   title: string;
   description: string;
+  image: string;
 }
 
 export interface Artist {
@@ -44,16 +45,20 @@ function arr(raw: string | undefined): unknown[] {
 const str = (v: unknown) => (typeof v === "string" ? v : "");
 
 export const DEFAULT_STEPS: ProcessStep[] = [
-  { title: "Obtención del STL", description: "Seleccionamos modelos de artistas especializados y preparamos el archivo para impresión." },
-  { title: "Impresión 3D", description: "Imprimimos en FDM con perfiles calibrados para máximo detalle y resistencia." },
-  { title: "Postprocesado", description: "Lijado, masillado e imprimación para eliminar capas y lograr una superficie lisa." },
-  { title: "Pintura", description: "Pintura a mano con técnicas de sombreado, luces y detallado profesional." },
-  { title: "Control de calidad", description: "Revisión final de acabado, ensamble y barnizado protector antes de la entrega." },
+  { title: "Obtención del STL", description: "Seleccionamos modelos de artistas especializados y preparamos el archivo para impresión.", image: "" },
+  { title: "Impresión 3D", description: "Imprimimos en FDM con perfiles calibrados para máximo detalle y resistencia.", image: "" },
+  { title: "Postprocesado", description: "Lijado, masillado e imprimación para eliminar capas y lograr una superficie lisa.", image: "" },
+  { title: "Pintura", description: "Pintura a mano con técnicas de sombreado, luces y detallado profesional.", image: "" },
+  { title: "Control de calidad", description: "Revisión final de acabado, ensamble y barnizado protector antes de la entrega.", image: "" },
 ];
 
 export function parseAbout(s: Record<string, string>): AboutContent {
   const steps = arr(s.about_process_steps)
-    .map((x) => ({ title: str((x as Record<string, unknown>)?.title), description: str((x as Record<string, unknown>)?.description) }))
+    .map((x) => ({
+      title: str((x as Record<string, unknown>)?.title),
+      description: str((x as Record<string, unknown>)?.description),
+      image: str((x as Record<string, unknown>)?.image),
+    }))
     .filter((x) => x.title || x.description);
 
   const artists = arr(s.about_artists)

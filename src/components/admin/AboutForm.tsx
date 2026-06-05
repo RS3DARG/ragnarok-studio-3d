@@ -48,7 +48,7 @@ export default function AboutForm({ initial }: { initial: Record<string, string>
         about_history_text: historyText.trim(),
         about_process_title: processTitle.trim(),
         about_process_steps: JSON.stringify(
-          steps.map((s) => ({ title: s.title.trim(), description: s.description.trim() })).filter((s) => s.title || s.description)
+          steps.map((s) => ({ title: s.title.trim(), description: s.description.trim(), image: s.image || "" })).filter((s) => s.title || s.description)
         ),
         about_video_title: videoTitle.trim(),
         about_video_type: videoType,
@@ -100,7 +100,7 @@ export default function AboutForm({ initial }: { initial: Record<string, string>
       <section className={card}>
         <div className="flex items-center justify-between">
           <h2 className={h2}>Cómo nace una figura</h2>
-          <button type="button" onClick={() => setSteps((p) => [...p, { title: "", description: "" }])} className="rounded-xl border border-ember-500/40 bg-ember-500/10 px-3 py-1.5 text-sm font-semibold text-ember-200 transition hover:bg-ember-500/20">+ Paso</button>
+          <button type="button" onClick={() => setSteps((p) => [...p, { title: "", description: "", image: "" }])} className="rounded-xl border border-ember-500/40 bg-ember-500/10 px-3 py-1.5 text-sm font-semibold text-ember-200 transition hover:bg-ember-500/20">+ Paso</button>
         </div>
         <div>
           <label className={label}>Título de la sección</label>
@@ -114,7 +114,13 @@ export default function AboutForm({ initial }: { initial: Record<string, string>
                 <button type="button" onClick={() => setSteps((p) => p.filter((_, idx) => idx !== i))} className="text-xs text-zinc-500 hover:text-red-300">Eliminar</button>
               </div>
               <input className={`${field} mb-2`} placeholder="Título" value={s.title} onChange={(e) => setSteps((p) => p.map((x, idx) => idx === i ? { ...x, title: e.target.value } : x))} />
-              <textarea className={`${field} min-h-16 resize-y`} placeholder="Descripción" value={s.description} onChange={(e) => setSteps((p) => p.map((x, idx) => idx === i ? { ...x, description: e.target.value } : x))} />
+              <textarea className={`${field} mb-2 min-h-16 resize-y`} placeholder="Descripción" value={s.description} onChange={(e) => setSteps((p) => p.map((x, idx) => idx === i ? { ...x, description: e.target.value } : x))} />
+              <ImageUploader
+                label="Imagen del paso (opcional)"
+                value={s.image ? [s.image] : []}
+                onChange={(imgs) => setSteps((p) => p.map((x, idx) => idx === i ? { ...x, image: imgs[0] ?? "" } : x))}
+                multiple={false}
+              />
             </div>
           ))}
         </div>

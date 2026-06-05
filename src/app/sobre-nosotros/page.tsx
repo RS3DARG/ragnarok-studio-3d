@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { getSettings } from "@/lib/data";
 import { parseAbout, toEmbedUrl } from "@/lib/about";
+import Image from "next/image";
+import AboutProcessStep from "@/components/AboutProcessStep";
 
 export const metadata: Metadata = {
   title: "Sobre nosotros",
@@ -63,21 +64,11 @@ export default async function SobreNosotrosPage() {
             <h2 className="mb-10 text-center font-display text-3xl font-bold uppercase tracking-wide text-white">
               {a.processTitle}
             </h2>
-            <ol className="relative space-y-6 border-l border-white/10 pl-6">
-              {a.steps.map((step, i) => (
-                <li key={i} className="relative pl-4">
-                  <span className="absolute -left-[31px] flex h-8 w-8 items-center justify-center rounded-full bg-ember-500 font-display text-sm font-bold text-black">
-                    {i + 1}
-                  </span>
-                  <h3 className="font-display text-lg font-semibold uppercase tracking-wide text-white">
-                    {step.title}
-                  </h3>
-                  {step.description ? (
-                    <p className="mt-1 text-zinc-400">{step.description}</p>
-                  ) : null}
-                </li>
-              ))}
-            </ol>
+           <ol className="relative space-y-6 border-l border-white/10 pl-6">
+  {a.steps.map((step, i) => (
+    <AboutProcessStep key={i} step={step} index={i} />
+  ))}
+</ol>
           </div>
         </section>
 
