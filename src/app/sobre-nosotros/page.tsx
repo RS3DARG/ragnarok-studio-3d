@@ -10,6 +10,20 @@ export const metadata: Metadata = {
   title: "Sobre nosotros",
   description:
     "La historia, la filosofía y el proceso artesanal detrás de Ragnarok Studio 3D: figuras coleccionables impresas en 3D con acabado profesional.",
+  alternates: { canonical: "https://rs3d.vercel.app/sobre-nosotros" },
+  openGraph: {
+    type: "website",
+    title: "Sobre nosotros | Ragnarok Studio 3D",
+    description: "La historia, la filosofía y el proceso artesanal detrás de Ragnarok Studio 3D.",
+    url: "https://rs3d.vercel.app/sobre-nosotros",
+    images: [{ url: "https://rs3d.vercel.app/og-default.webp", width: 1200, height: 630, alt: "Ragnarok Studio 3D" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sobre nosotros | Ragnarok Studio 3D",
+    description: "La historia, la filosofía y el proceso artesanal detrás de Ragnarok Studio 3D.",
+    images: ["https://rs3d.vercel.app/og-default.webp"],
+  },
 };
 
 export const revalidate = 60;

@@ -11,6 +11,20 @@ export const metadata: Metadata = {
   title: "Catálogo completo | Ragnarok Studio 3D",
   description:
     "Explorá todas nuestras figuras coleccionables impresas en 3D: esculturas, bustos, dioramas y llaveros. Buscá por personaje, saga o categoría.",
+  alternates: { canonical: "https://rs3d.vercel.app/catalogo" },
+  openGraph: {
+    type: "website",
+    title: "Catálogo completo | Ragnarok Studio 3D",
+    description: "Explorá todas nuestras figuras coleccionables impresas en 3D: esculturas, bustos, dioramas y llaveros.",
+    url: "https://rs3d.vercel.app/catalogo",
+    images: [{ url: "https://rs3d.vercel.app/og-default.webp", width: 1200, height: 630, alt: "Ragnarok Studio 3D" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Catálogo completo | Ragnarok Studio 3D",
+    description: "Explorá todas nuestras figuras coleccionables impresas en 3D.",
+    images: ["https://rs3d.vercel.app/og-default.webp"],
+  },
 };
 
 export const revalidate = 60;

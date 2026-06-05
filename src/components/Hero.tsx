@@ -182,13 +182,14 @@ export default function Hero({
                         i === index ? "scale-100 opacity-100" : "scale-105 opacity-0"
                       }`}
                     >
-                      {src ? (
+                     {src ? (
                         <Image
                           src={src}
                           alt={s.name || ""}
                           fill
                           sizes="(max-width: 1024px) 100vw, 440px"
                           priority={i === 0}
+                          loading={i === 0 ? "eager" : "lazy"}
                           className="object-cover"
                         />
                       ) : (
@@ -272,6 +273,7 @@ export default function Hero({
                         fill
                         sizes="(max-width: 1024px) 100vw, 440px"
                         priority={i === 0}
+                        loading={i === 0 ? "eager" : "lazy"}
                         className="object-cover"
                       />
                     ) : (
