@@ -124,3 +124,38 @@ export async function deleteFigure(id: string): Promise<ActionResult> {
     return { ok: false, error: (e as Error).message };
   }
 }
+
+export async function reorderFigure(id: string, direction: "up" | "down"): Promise<ActionResult> {
+  try {
+    const supabase = await getAuthedClient();
+
+    // Trae todas las figuras destacadas ordenadas
+    const { data: figures } = await supabase
+      .from("figures")
+      .select("id, sort_order")
+      .eq("featured", true)
+      .order("sort_order", { ascending: true })
+      .order("created_at", { ascending: false });
+
+    if (!figures) return { ok: false, error: "No se encontraron figuras" };
+
+    const idx = figures.findIndex((f) => f.id === id);
+    if (idx === -1) return { ok: false, error: "Figura no encontrada" };
+
+    const swapIdx = direction === "up" ? idx - 1 : idx + 1;
+    if (swapIdx < 0 || swapIdx >= figures.length) return { ok: true };
+
+    const current = figures[idx];
+    const swap = figures[swapIdx];
+
+    // Intercambia sort_order
+    await supabase.from("figures").update({ sort_order: swap.sort_order ?? swapIdx }).eq("id", current.id);
+    await supabase.from("figures").update({ sort_order: current.sort_order ?? idx }).eq("id", swap.id);
+
+    revalidatePath("/");
+    revalidatePath("/admin/figuras");
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}

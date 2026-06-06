@@ -309,9 +309,20 @@ export async function getFiguresPreview(limit = 8): Promise<Figure[]> {
   const { data } = await supabase
     .from("figures")
     .select("*, category:categories(*)")
+    .eq("featured", true)
+    .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false })
     .limit(limit);
-  return (data as Figure[]) ?? [];
+  let list = (data as Figure[]) ?? [];
+  if (list.length === 0) {
+    const { data: fallback } = await supabase
+      .from("figures")
+      .select("*, category:categories(*)")
+      .order("created_at", { ascending: false })
+      .limit(limit);
+    list = (fallback as Figure[]) ?? [];
+  }
+  return list;
 }
 
 /** Figuras destacadas (con portada) para los slides del Hero. */

@@ -4,6 +4,7 @@ import { getFigures } from "@/lib/data";
 import { deleteFigure } from "@/lib/actions/figures";
 import { STATUS_LABELS } from "@/lib/types";
 import DeleteButton from "@/components/admin/DeleteButton";
+import ReorderButtons from "@/components/admin/ReorderButtons";
 
 export const metadata = { title: "Figuras" };
 export const dynamic = "force-dynamic";
@@ -47,6 +48,7 @@ export default async function AdminFiguresPage() {
                 <th className="hidden px-4 py-3 font-medium sm:table-cell">Saga</th>
                 <th className="hidden px-4 py-3 font-medium md:table-cell">Categoría</th>
                 <th className="px-4 py-3 font-medium">Estado</th>
+                <th className="hidden px-4 py-3 font-medium sm:table-cell">Orden</th>
                 <th className="px-4 py-3 text-right font-medium">Acciones</th>
               </tr>
             </thead>
@@ -77,6 +79,9 @@ export default async function AdminFiguresPage() {
                   </td>
                   <td className="px-4 py-3 text-zinc-300">
                     {STATUS_LABELS[f.status]}
+                  </td>
+                  <td className="hidden px-4 py-3 sm:table-cell">
+                    <ReorderButtons id={f.id} featured={f.featured ?? false} />
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-1">
