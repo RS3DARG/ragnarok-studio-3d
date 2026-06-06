@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 
 export default function Countdown({ targetDate }: { targetDate: string }) {
   const calculate = () => {
-    const diff = new Date(targetDate).getTime() - new Date().getTime();
+   const parsed = targetDate.includes("T")
+      ? new Date(targetDate)
+      : new Date(targetDate.replace(/(\d{2})\/(\d{2})\/(\d{4})/, "$3-$2-$1"));
+    const diff = parsed.getTime() - new Date().getTime();
     if (diff <= 0) {
       return { days: "00", hours: "00", minutes: "00", seconds: "00" };
     }
