@@ -12,7 +12,6 @@ export default function ReorderButtons({
 }) {
   const [pending, startTransition] = useTransition();
 
-  if (!featured) return null;
 
   function move(direction: "up" | "down") {
     startTransition(async () => {

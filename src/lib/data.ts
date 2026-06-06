@@ -20,12 +20,11 @@ export async function getCategories(): Promise<Category[]> {
 /* ------------------------------- FIGURAS -------------------------------- */
 export async function getFigures(): Promise<Figure[]> {
   const supabase = await createClient();
-
   const { data } = await supabase
     .from("figures")
     .select("*, category:categories(*)")
+    .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
-
   return (data as Figure[]) ?? [];
 }
 
@@ -282,6 +281,7 @@ export async function getCatalog(
   let query = supabase
     .from("figures")
     .select("*, category:categories(*)", { count: "exact" })
+    .order("sort_order", { ascending: true })
     .order("created_at", { ascending: false });
 
   if (categoryId) query = query.eq("category_id", categoryId);

@@ -133,7 +133,6 @@ export async function reorderFigure(id: string, direction: "up" | "down"): Promi
     const { data: figures } = await supabase
       .from("figures")
       .select("id, sort_order")
-      .eq("featured", true)
       .order("sort_order", { ascending: true })
       .order("created_at", { ascending: false });
 
