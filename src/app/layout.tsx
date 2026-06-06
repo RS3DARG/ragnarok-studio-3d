@@ -4,6 +4,7 @@ import "./globals.css";
 import { BRAND, SITE_URL } from "@/lib/utils";
 import { StoreProvider } from "@/lib/store";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import HashScroll from "@/components/HashScroll";
 
 const display = Oswald({
   subsets: ["latin"],
@@ -84,6 +85,7 @@ export default function RootLayout({
     <html lang="es" className={`${display.variable} ${body.variable}`}>
       <body className="font-sans antialiased bg-ink-950 text-zinc-200 selection:bg-ember-500">
         <StoreProvider>{children}</StoreProvider>
+        <HashScroll />
         <WhatsAppFloat />
       </body>
     </html>
