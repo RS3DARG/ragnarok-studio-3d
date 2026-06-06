@@ -76,4 +76,11 @@ export const STATUS_LABELS: Record<FigureStatus, string> = {
   sold_out: "Agotado",
 };
 
-export const FIGURE_TYPES = ["Escultura", "Busto", "Diorama", "Llavero"] as const;
+export const FIGURE_TYPES = [
+  "Escultura",
+  "Busto",
+  "Diorama",
+  "Llavero",
+  "Toon",
+  "Chibi",
+] as const;
