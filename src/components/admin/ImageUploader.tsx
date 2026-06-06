@@ -1,5 +1,4 @@
 "use client";
-
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
@@ -27,6 +26,8 @@ export default function ImageUploader({
   const inputRef = useRef<HTMLInputElement>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [dragOver, setDragOver] = useState<number | null>(null);
+  const [dragging, setDragging] = useState<number | null>(null);
 
   async function handleFiles(files: FileList | null) {
     if (!files || !files.length) return;
@@ -34,7 +35,6 @@ export default function ImageUploader({
     setUploading(true);
     const supabase = createClient();
     const uploaded: string[] = [];
-
     try {
       const list = multiple ? Array.from(files) : [files[0]];
       for (const file of list) {
@@ -48,9 +48,7 @@ export default function ImageUploader({
       }
       onChange(multiple ? [...value, ...uploaded] : uploaded);
     } catch (e) {
-      setError(
-        "Error al subir. Verificá que el bucket 'figures' exista y sea público."
-      );
+      setError("Error al subir. Verificá que el bucket 'figures' exista y sea público.");
       console.error(e);
     } finally {
       setUploading(false);
@@ -62,19 +60,70 @@ export default function ImageUploader({
     onChange(value.filter((u) => u !== url));
   }
 
+  // Drag & drop para reordenar
+  function handleDragStart(i: number) {
+    setDragging(i);
+  }
+
+  function handleDragOver(e: React.DragEvent, i: number) {
+    e.preventDefault();
+    setDragOver(i);
+  }
+
+  function handleDrop(e: React.DragEvent, i: number) {
+    e.preventDefault();
+    if (dragging === null || dragging === i) {
+      setDragging(null);
+      setDragOver(null);
+      return;
+    }
+    const reordered = [...value];
+    const [moved] = reordered.splice(dragging, 1);
+    reordered.splice(i, 0, moved);
+    onChange(reordered);
+    setDragging(null);
+    setDragOver(null);
+  }
+
+  function handleDragEnd() {
+    setDragging(null);
+    setDragOver(null);
+  }
+
   return (
     <div>
       <label className="mb-1.5 block text-sm font-medium text-zinc-300">
         {label}
       </label>
-
+      {multiple && value.length > 1 ? (
+        <p className="mb-2 text-xs text-zinc-500">
+          Arrastrá las imágenes para cambiar el orden. La primera es la que se muestra primero.
+        </p>
+      ) : null}
       <div className="flex flex-wrap gap-3">
-        {value.map((url) => (
+        {value.map((url, i) => (
           <div
             key={url}
-            className="group relative h-24 w-24 overflow-hidden rounded-xl border border-white/10"
+            draggable={multiple}
+            onDragStart={() => handleDragStart(i)}
+            onDragOver={(e) => handleDragOver(e, i)}
+            onDrop={(e) => handleDrop(e, i)}
+            onDragEnd={handleDragEnd}
+            className={`group relative h-24 w-24 overflow-hidden rounded-xl border transition ${
+              dragOver === i
+                ? "scale-105 border-ember-400"
+                : dragging === i
+                ? "border-white/30 opacity-40"
+                : "border-white/10"
+            } ${multiple ? "cursor-grab active:cursor-grabbing" : ""}`}
           >
             <Image src={url} alt="" fill sizes="96px" className="object-cover" />
+            {/* Número de orden */}
+            {multiple ? (
+              <span className="absolute left-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/70 text-xs font-bold text-white">
+                {i + 1}
+              </span>
+            ) : null}
             <button
               type="button"
               onClick={() => remove(url)}
@@ -85,7 +134,6 @@ export default function ImageUploader({
             </button>
           </div>
         ))}
-
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
@@ -102,7 +150,6 @@ export default function ImageUploader({
           )}
         </button>
       </div>
-
       <input
         ref={inputRef}
         type="file"
