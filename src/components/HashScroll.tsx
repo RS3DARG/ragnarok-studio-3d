@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function HashScroll() {
+function HashScrollInner() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -13,23 +15,28 @@ export default function HashScroll() {
     const id = hash.slice(1);
     let attempts = 0;
 
-    // Reintenta hasta que el elemento exista (la home monta progresivamente)
     const tryScroll = () => {
       const el = document.getElementById(id);
       if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        // Offset por el header sticky (64px aprox)
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top, behavior: "smooth" });
         return;
       }
       attempts += 1;
-      if (attempts < 20) {
-        setTimeout(tryScroll, 150);
-      }
+      if (attempts < 30) setTimeout(tryScroll, 200);
     };
 
-    // Pequeño delay inicial para dar tiempo al primer render
-    const t = setTimeout(tryScroll, 100);
-    return () => clearTimeout(t);
-  }, [pathname]);
+    setTimeout(tryScroll, 300);
+  }, [pathname, searchParams]);
 
   return null;
+}
+
+export default function HashScroll() {
+  return (
+    <Suspense fallback={null}>
+      <HashScrollInner />
+    </Suspense>
+  );
 }
