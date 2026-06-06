@@ -81,7 +81,7 @@ export default async function AdminFiguresPage() {
                     {STATUS_LABELS[f.status]}
                   </td>
                   <td className="hidden px-4 py-3 sm:table-cell">
-                    <ReorderButtons id={f.id} order={f.sort_order ?? 0} />
+                    <ReorderButtons key={f.sort_order} id={f.id} order={f.sort_order ?? 0} />
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center justify-end gap-1">

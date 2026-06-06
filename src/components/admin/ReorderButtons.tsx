@@ -13,10 +13,7 @@ export default function ReorderButtons({
   const [pending, startTransition] = useTransition();
   const [inputVal, setInputVal] = useState(String(order));
 
-  // Sincroniza si cambia el orden desde afuera (revalidación)
-  if (String(order) !== inputVal && !pending) {
-    setInputVal(String(order));
-  }
+  
 
   function move(direction: "up" | "down") {
     startTransition(async () => {
