@@ -158,3 +158,46 @@ export async function reorderFigure(id: string, direction: "up" | "down"): Promi
     return { ok: false, error: (e as Error).message };
   }
 }
+
+export async function setSortOrder(id: string, newOrder: number): Promise<ActionResult> {
+  try {
+    const supabase = await getAuthedClient();
+
+    const { data: figures } = await supabase
+      .from("figures")
+      .select("id, sort_order")
+      .order("sort_order", { ascending: true })
+      .order("created_at", { ascending: false });
+
+    if (!figures) return { ok: false, error: "No se encontraron figuras" };
+
+    const current = figures.find((f) => f.id === id);
+    if (!current) return { ok: false, error: "Figura no encontrada" };
+
+    const oldOrder = current.sort_order ?? 0;
+    const clampedNew = Math.max(1, Math.min(newOrder, figures.length));
+
+    // Reordena: mueve todos los afectados
+    const updates = figures.map((f) => {
+      if (f.id === id) return { id: f.id, sort_order: clampedNew };
+      const o = f.sort_order ?? 0;
+      if (oldOrder < clampedNew && o > oldOrder && o <= clampedNew) {
+        return { id: f.id, sort_order: o - 1 };
+      }
+      if (oldOrder > clampedNew && o >= clampedNew && o < oldOrder) {
+        return { id: f.id, sort_order: o + 1 };
+      }
+      return { id: f.id, sort_order: o };
+    });
+
+    for (const u of updates) {
+      await supabase.from("figures").update({ sort_order: u.sort_order }).eq("id", u.id);
+    }
+
+    revalidatePath("/");
+    revalidatePath("/admin/figuras");
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: (e as Error).message };
+  }
+}
