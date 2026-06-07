@@ -4,6 +4,7 @@ import { useState, useTransition, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { saveCotizacion, type CotizacionPayload } from "@/lib/actions/cotizaciones";
 import { createClient } from "@/lib/supabase/client";
+import CotizacionCard from "@/components/admin/CotizacionCard";
 
 const inputClass = "w-full rounded-xl border border-white/10 bg-ink-850 px-4 py-3 text-white outline-none transition focus:border-ember-400 focus:ring-2 focus:ring-ember-500/30 text-sm";
 const labelClass = "mb-1.5 block text-sm font-medium text-zinc-300";
@@ -281,9 +282,31 @@ export default function CotizacionForm({ cotizacion }: { cotizacion?: Record<str
         </div>
       </div>
 
+     <div className={sectionClass}>
+        <h2 className="font-display text-lg font-semibold uppercase tracking-wide text-white">Preview y descarga</h2>
+        <p className="text-xs text-zinc-500">La card se actualiza en tiempo real. Guardá primero y luego descargá el PNG.</p>
+        <CotizacionCard
+          numero={numero}
+          fecha={fecha}
+          nombre={nombre}
+          saga={saga}
+          altura={altura}
+          tiempo={tiempo}
+          img={img}
+          precioFinal={calcPrecioFinal()}
+          metodo={metodo}
+          validez={validez}
+          validoHasta={validoHasta}
+          procesos={procesos}
+          condiciones={condiciones}
+          notas={notas}
+          tel={tel}
+          ig={ig}
+        />
+      </div>
+
       {error && <p className="rounded-lg bg-red-500/10 px-3 py-2 text-sm text-red-300 ring-1 ring-inset ring-red-500/20">{error}</p>}
       {ok && <p className="rounded-lg bg-emerald-500/10 px-3 py-2 text-sm text-emerald-300 ring-1 ring-inset ring-emerald-500/20">Guardado correctamente.</p>}
-
       <div className="flex items-center gap-3">
         <button type="submit" disabled={pending}
           className="rounded-xl bg-ember-500 px-6 py-3 font-semibold text-black transition hover:bg-ember-400 disabled:opacity-60">
