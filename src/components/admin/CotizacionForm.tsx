@@ -64,6 +64,7 @@ export default function CotizacionForm({ cotizacion }: { cotizacion?: Record<str
 
   function calcPrecioFinal() {
     const base = parseFloat(precioBase) || 0;
+    if (metodo === "efectivo") return Math.round(base * 0.95);
     if (metodo === "tc2") return Math.round(base * 1.10);
     if (metodo === "tc3") return Math.round(base * 1.15);
     return base;
@@ -127,7 +128,7 @@ export default function CotizacionForm({ cotizacion }: { cotizacion?: Record<str
   }
 
   const precioFinal = calcPrecioFinal();
-  const recargo = metodo === "tc2" ? "+10%" : metodo === "tc3" ? "+15%" : null;
+  const recargoLabel = metodo === "efectivo" ? "-5%" : metodo === "tc2" ? "+10%" : metodo === "tc3" ? "+15%" : null;
 
   return (
     <form onSubmit={handleSubmit} className="max-w-3xl space-y-6">
@@ -220,7 +221,7 @@ export default function CotizacionForm({ cotizacion }: { cotizacion?: Record<str
           <label className={labelClass}>Método de pago</label>
           <div className="space-y-2">
             {[
-              { val: "efectivo", label: "Efectivo / Transferencia (sin recargo)" },
+              { val: "efectivo", label: "Efectivo / Transferencia (5% de descuento)" },
               { val: "tc2", label: "Tarjeta crédito 2 cuotas (+10%)" },
               { val: "tc3", label: "Tarjeta crédito 3 cuotas (+15%)" },
             ].map(m => (
@@ -238,7 +239,11 @@ export default function CotizacionForm({ cotizacion }: { cotizacion?: Record<str
             <p className="font-display text-3xl font-bold text-white">
               $ {precioFinal.toLocaleString("es-AR")}
             </p>
-            {recargo && <p className="text-xs text-ember-400 mt-1">Recargo {recargo} incluido</p>}
+            {recargoLabel && (
+              <p className="text-xs text-ember-400 mt-1">
+                {metodo === "efectivo" ? `Descuento ${recargoLabel} aplicado` : `Recargo ${recargoLabel} incluido`}
+              </p>
+            )}
           </div>
         )}
       </div>
