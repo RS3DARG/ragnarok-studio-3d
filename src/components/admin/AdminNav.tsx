@@ -16,6 +16,7 @@ const LINKS = [
   { href: "/admin/newsletter", label: "Newsletter" },
   { href: "/admin/reservas", label: "Reservas" },
   { href: "/admin/pagos", label: "Pagos y textos" },
+  { href: "/admin/cotizaciones", label: "Cotizaciones" },
 ];
 
 export default function AdminNav() {
