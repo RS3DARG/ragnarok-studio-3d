@@ -29,15 +29,15 @@ export default function CotizacionCard(props: CotizacionCardProps) {
   if (!cardRef.current) return;
   setDownloading(true);
   try {
-    const { default: html2canvas } = await import("html2canvas");
-    const canvas = await html2canvas(cardRef.current, {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ...(({ scale: 3, useCORS: true, backgroundColor: "#111111" }) as any),
-    });
+    const { toPng } = await import("dom-to-image-more");
+    const dataUrl = await toPng(cardRef.current, { scale: 3 });
     const a = document.createElement("a");
     a.download = `cotizacion-rs3d-${props.numero}.png`;
-    a.href = canvas.toDataURL("image/png");
+    a.href = dataUrl;
     a.click();
+  } catch (e) {
+    console.error("Error al generar imagen:", e);
+    alert("No se pudo generar la imagen.");
   } finally {
     setDownloading(false);
   }
