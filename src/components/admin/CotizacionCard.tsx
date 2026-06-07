@@ -26,23 +26,22 @@ export default function CotizacionCard(props: CotizacionCardProps) {
   const [downloading, setDownloading] = useState(false);
 
   async function download() {
-    if (!cardRef.current) return;
-    setDownloading(true);
-    try {
-      const { default: html2canvas } = await import("html2canvas");
-      const canvas = await html2canvas(cardRef.current, {
-        scale: 3,
-        useCORS: true,
-        backgroundColor: "#111111",
-      });
-      const a = document.createElement("a");
-      a.download = `cotizacion-rs3d-${props.numero}.png`;
-      a.href = canvas.toDataURL("image/png");
-      a.click();
-    } finally {
-      setDownloading(false);
-    }
+  if (!cardRef.current) return;
+  setDownloading(true);
+  try {
+    const { default: html2canvas } = await import("html2canvas");
+    const canvas = await html2canvas(cardRef.current, {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ...(({ scale: 3, useCORS: true, backgroundColor: "#111111" }) as any),
+    });
+    const a = document.createElement("a");
+    a.download = `cotizacion-rs3d-${props.numero}.png`;
+    a.href = canvas.toDataURL("image/png");
+    a.click();
+  } finally {
+    setDownloading(false);
   }
+}
 
   const metodoPagoLabel =
     props.metodo === "efectivo"
