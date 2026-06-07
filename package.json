@@ -13,6 +13,7 @@
     "@supabase/ssr": "^0.5.2",
     "@supabase/supabase-js": "^2.45.4",
     "dom-to-image-more": "^3.7.2",
+    "html2canvas": "^1.4.1",
     "next": "^16.2.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
