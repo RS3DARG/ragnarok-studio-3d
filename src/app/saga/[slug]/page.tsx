@@ -126,6 +126,10 @@ export default async function SagaPage({
         </div>
 
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {figures.map((f) => (
+            <FigureCard key={f.id} figure={f} />
+          ))}
+        </div>
 
         <div className="mt-16">
           <CustomOrder />
