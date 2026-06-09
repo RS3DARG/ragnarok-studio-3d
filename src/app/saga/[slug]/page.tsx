@@ -116,11 +116,16 @@ export default async function SagaPage({
           </p>
         </header>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {figures.map((f) => (
-            <FigureCard key={f.id} figure={f} />
-          ))}
+        <div className="mb-10 rounded-2xl border border-white/5 bg-ink-900 px-6 py-5">
+          <p className="text-zinc-400 leading-relaxed">
+            Explorá nuestra colección de figuras coleccionables de <strong className="text-white">{saga}</strong>, 
+            impresas en 3D con tecnología FDM y pintadas completamente a mano. 
+            Cada pieza pasa por lijado, imprimación, pintura multicapa y barnizado protector. 
+            Disponibles en múltiples escalas por encargo — consultanos para recibir tu cotización personalizada.
+          </p>
         </div>
+
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
 
         <div className="mt-16">
           <CustomOrder />
