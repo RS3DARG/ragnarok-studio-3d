@@ -53,12 +53,14 @@ export default function FigureCard({ figure }: { figure: Figure }) {
           {figure.saga ? (
             <p className="mt-0.5 text-sm text-ember-400/90">{figure.saga}</p>
           ) : null}
-          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-zinc-500">
+          <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-zinc-400">
             {figure.figure_type ? <span>{figure.figure_type}</span> : null}
-            {figure.figure_type && figure.height ? (
-              <span className="text-zinc-700">•</span>
+            {figure.height ? (
+              <span className="text-zinc-600">•</span>
             ) : null}
-            {figure.height ? <span>{figure.height}</span> : null}
+            {figure.height ? (
+              <span>Altura recomendada: {figure.height}</span>
+            ) : null}
           </div>
           {figure.price ? (
             <p className="mt-2 text-sm font-semibold text-ember-300">
