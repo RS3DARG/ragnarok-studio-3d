@@ -214,14 +214,16 @@ export default async function FigurePage({
               {figure.saga ? <Spec label="Saga" value={figure.saga} /> : null}
             </dl>
 
-            {figure.description ? (
+           {figure.description ? (
               <div className="mt-6">
                 <h2 className="font-display text-sm uppercase tracking-[0.2em] text-zinc-500">
                   Descripción
                 </h2>
-                <p className="mt-3 leading-relaxed text-zinc-300">
-                  {figure.description}
-                </p>
+                <div className="mt-3 space-y-3 leading-relaxed text-zinc-300">
+                  {figure.description.split("\n").filter(Boolean).map((line, i) => (
+                    <p key={i}>{line}</p>
+                  ))}
+                </div>
               </div>
             ) : null}
 

@@ -116,7 +116,7 @@ export default function CotizacionCard(props: CotizacionCardProps) {
             <span style={{ color: "#cc3300" }}>{props.saga.toUpperCase()}</span>
           </div>
           <div style={{ fontSize: "10px", color: "#666", fontStyle: "italic", marginBottom: "18px" }}>
-            Figura artesanal única — no reproducible
+            Figura artesanal única
           </div>
 
           {props.img && (
