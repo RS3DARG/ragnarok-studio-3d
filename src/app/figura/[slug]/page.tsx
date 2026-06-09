@@ -214,6 +214,35 @@ export default async function FigurePage({
               {figure.saga ? <Spec label="Saga" value={figure.saga} /> : null}
             </dl>
 
+		<div className="mt-6 rounded-2xl border border-white/5 bg-ink-900 p-5">
+              <p className="mb-4 font-display text-xs uppercase tracking-[0.2em] text-zinc-500">
+                Escalas disponibles
+              </p>
+              <div className="grid grid-cols-4 gap-2">
+                {[
+                  { label: "S", height: "~20cm" },
+                  { label: "M", height: "~30cm" },
+                  { label: "L", height: "~40cm" },
+                  { label: "XL", height: "+50cm" },
+                ].map((s) => (
+                  <div
+                    key={s.label}
+                    className="flex flex-col items-center rounded-xl border border-white/10 bg-ink-850 py-3"
+                  >
+                    <span className="font-display text-lg font-bold text-ember-400">
+                      {s.label}
+                    </span>
+                    <span className="mt-0.5 text-xs text-zinc-500">
+                      {s.height}
+                    </span>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-3 text-xs text-zinc-500">
+                El precio varía según la escala. Consultanos para recibir tu cotización personalizada.
+              </p>
+            </div>
+
            {figure.description ? (
               <div className="mt-6">
                 <h2 className="font-display text-sm uppercase tracking-[0.2em] text-zinc-500">
@@ -247,8 +276,8 @@ export default async function FigurePage({
                 />
               </div>
               <p className="mt-3 text-xs text-zinc-500">
-                Te respondemos con disponibilidad, precio y plazos de producción.
-              </p>
+  Te respondemos en menos de 24hs con escala, precio y plazo de entrega.
+</p>
             </div>
           </div>
         </div>
