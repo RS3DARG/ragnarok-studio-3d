@@ -211,7 +211,7 @@ export default async function FigurePage({
               {figure.price ? (
                 <Spec label="Precio" value={figure.price} />
               ) : null}
-              {figure.saga ? <Spec label="Saga" value={figure.saga} /> : null}
+         
             </dl>
 
 		<div className="mt-6 rounded-2xl border border-white/5 bg-ink-900 p-5">
