@@ -20,6 +20,28 @@ const body = Sora({
   display: "swap",
 });
 
+const localBusinessLd = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "Ragnarok Studio 3D",
+  "description": "Fabricación artesanal de figuras coleccionables impresas en 3D (FDM): esculturas, bustos, dioramas y llaveros de tus franquicias favoritas.",
+  "url": "https://rs3d.vercel.app",
+  "telephone": "+5492994101115",
+  "sameAs": ["https://instagram.com/ragnarok_studio3d"],
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "Neuquén",
+    "addressCountry": "AR"
+  },
+  "areaServed": [
+    "Neuquén Capital", "Cipolletti", "Allen", "General Roca",
+    "Plottier", "Centenario", "Fernández Oro"
+  ],
+  "priceRange": "$$",
+  "currenciesAccepted": "ARS",
+  "paymentAccepted": "Efectivo, Transferencia, Tarjeta de crédito"
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -84,6 +106,10 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${display.variable} ${body.variable}`}>
       <body className="font-sans antialiased bg-ink-950 text-zinc-200 selection:bg-ember-500">
+	<script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessLd) }}
+        />
         <StoreProvider>{children}</StoreProvider>
         <HashScroll />
         <WhatsAppFloat />
