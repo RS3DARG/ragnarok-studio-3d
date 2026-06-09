@@ -121,7 +121,7 @@ export default async function SagaPage({
             Explorá nuestra colección de figuras coleccionables de <strong className="text-white">{saga}</strong>, 
             impresas en 3D con tecnología FDM y pintadas completamente a mano. 
             Cada pieza pasa por lijado, imprimación, pintura multicapa y barnizado protector. 
-            Disponibles en múltiples escalas por encargo — consultanos para recibir tu cotización personalizada.
+            {"Disponibles en múltiples escalas por encargo — consultanos para recibir tu cotización personalizada."}
           </p>
         </div>
 
