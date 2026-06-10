@@ -59,7 +59,10 @@ export default function FigureCard({ figure }: { figure: Figure }) {
               <span className="text-zinc-600">•</span>
             ) : null}
             {figure.height ? (
-              <span>Altura recomendada: {figure.height}</span>
+              <span>
+                {figure.status === "in_stock" ? "Altura:" : "Altura recomendada:"}{" "}
+                {figure.height}
+              </span>
             ) : null}
           </div>
           {figure.price ? (
