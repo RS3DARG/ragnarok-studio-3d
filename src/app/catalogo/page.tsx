@@ -8,7 +8,7 @@ import CatalogFilters from "@/components/CatalogFilters";
 import { getCatalog, getCategories, getAllSagas } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Catálogo completo | Ragnarok Studio 3D",
+  title: "Catálogo completo",
   description:
     "Explorá todas nuestras figuras coleccionables impresas en 3D: esculturas, bustos, dioramas y llaveros. Buscá por personaje, saga o categoría.",
   alternates: { canonical: "https://rs3d.vercel.app/catalogo" },
