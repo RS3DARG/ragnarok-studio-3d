@@ -6,6 +6,7 @@ const STYLES: Record<FigureStatus, string> = {
   on_demand: "bg-ember-500/15 text-ember-300 ring-ember-500/30",
   reserved: "bg-sky-500/15 text-sky-300 ring-sky-500/30",
   sold_out: "bg-zinc-500/15 text-zinc-400 ring-zinc-500/30",
+  in_progress: "bg-violet-500/15 text-violet-300 ring-violet-500/30",
 };
 
 export default function StatusBadge({

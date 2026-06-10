@@ -2,7 +2,8 @@ export type FigureStatus =
   | "on_demand"
   | "in_stock"
   | "reserved"
-  | "sold_out";
+  | "sold_out"
+  | "in_progress";
 
 export interface Category {
   id: string;
@@ -75,6 +76,7 @@ export const STATUS_LABELS: Record<FigureStatus, string> = {
   on_demand: "Disponible por encargo",
   reserved: "Reservada",
   sold_out: "Agotado",
+  in_progress: "En proceso",
 };
 
 export const FIGURE_TYPES = [
