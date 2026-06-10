@@ -5,6 +5,7 @@ import { BRAND, SITE_URL } from "@/lib/utils";
 import { StoreProvider } from "@/lib/store";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import HashScroll from "@/components/HashScroll";
+import Script from "next/script";
 
 const display = Oswald({
   subsets: ["latin"],
@@ -27,7 +28,7 @@ const localBusinessLd = {
   "description": "Fabricación artesanal de figuras coleccionables impresas en 3D (FDM): esculturas, bustos, dioramas y llaveros de tus franquicias favoritas.",
   "url": "https://rs3d.vercel.app",
   "telephone": "+5492994101115",
-  "sameAs": ["https://instagram.com/ragnarok_studio3d"],
+  "sameAs": ["https://instagram.com/rs3d_arg"],
   "address": {
     "@type": "PostalAddress",
     "addressRegion": "Neuquén",
@@ -66,7 +67,7 @@ export const metadata: Metadata = {
   ],
   applicationName: BRAND.name,
   authors: [{ name: BRAND.name }],
-  icons: {                              // ✅ agregado acá, en el único metadata
+  icons: {
     icon: "/favicon.png",
     apple: "/apple-touch-icon.png",
   },
@@ -105,8 +106,22 @@ export default function RootLayout({
 }) {
   return (
     <html lang="es" className={`${display.variable} ${body.variable}`}>
+      <head>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-H86ZKRWBT2"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-H86ZKRWBT2');
+          `}
+        </Script>
+      </head>
       <body className="font-sans antialiased bg-ink-950 text-zinc-200 selection:bg-ember-500">
-	<script
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessLd) }}
         />
