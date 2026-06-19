@@ -51,15 +51,16 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
-    formats: ["image/avif", "image/webp"],
-    qualities: [75, 85],
-    remotePatterns: [
-      ...(supabaseHost
-        ? [{ protocol: "https", hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }]
-        : []),
-      { protocol: "https", hostname: "*.supabase.co", pathname: "/storage/v1/object/public/**" },
-    ],
-  },
+  unoptimized: true,
+  formats: ["image/avif", "image/webp"],
+  qualities: [75, 85],
+  remotePatterns: [
+    ...(supabaseHost
+      ? [{ protocol: "https", hostname: supabaseHost, pathname: "/storage/v1/object/public/**" }]
+      : []),
+    { protocol: "https", hostname: "*.supabase.co", pathname: "/storage/v1/object/public/**" },
+  ],
+},
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
