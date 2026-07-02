@@ -28,16 +28,16 @@ export default function CatalogGrid({ items }: { items: Figure[] }) {
         <div className="flex flex-col gap-3">
           {items.map((f) => (
             <div
-              key={f.id}
-              className="flex items-center gap-4 rounded-2xl border border-white/5 bg-ink-900 p-3 transition hover:border-ember-400/30"
-            >
+                key={f.id}
+                className="flex items-start gap-4 rounded-2xl border border-white/5 bg-ink-900 p-3 transition hover:border-ember-400/30"
+              >
               <a href={`/figura/${f.slug}`} className="flex-shrink-0">
                 {f.cover_url ? (
                   <img
                     src={f.cover_url}
                     alt={f.name}
                     className="w-16 rounded-xl object-cover"
-                    style={{ aspectRatio: "4/5" }}
+                    style={{ aspectRatio: "4/5", height: "auto" }}
                   />
                 ) : (
                   <div className="w-16 rounded-xl bg-ink-850" style={{ aspectRatio: "4/5" }} />
