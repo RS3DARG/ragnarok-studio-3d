@@ -57,11 +57,11 @@ export default function CatalogGrid({ items }: { items: Figure[] }) {
               <div className="flex flex-shrink-0 items-center gap-2">
                 <ReserveButton
                   figure={{ id: f.id, slug: f.slug, name: f.name, saga: f.saga, cover_url: f.cover_url }}
-                  variant="icon"
+                  variant="chip"
                 />
                 <FavoriteButton
                   figure={{ id: f.id, slug: f.slug, name: f.name, saga: f.saga, cover_url: f.cover_url }}
-                  variant="icon"
+                  variant="chip"
                 />
               </div>
             </div>
