@@ -36,7 +36,7 @@ export default function CatalogFilters({
   const selectClass = "rounded-xl border border-white/10 bg-ink-850 px-4 py-3 text-white outline-none transition focus:border-ember-400 cursor-pointer";
 
   return (
-    <div className="mb-8 flex flex-wrap gap-3">
+    <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
       <select
         value={cat}
         onChange={(e) => router.push(buildQuery({ cat: e.target.value, page: "1" }))}
@@ -69,6 +69,35 @@ export default function CatalogFilters({
           <option key={st} value={st}>{STATUS_LABELS[st]}</option>
         ))}
       </select>
+<div className="flex gap-2 ml-auto">
+        <button
+          onClick={() => {
+            const url = new URL(window.location.href);
+            url.searchParams.set("view", "grid");
+            window.history.replaceState({}, "", url);
+            window.dispatchEvent(new CustomEvent("viewchange", { detail: "grid" }));
+          }}
+          className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 text-zinc-500 hover:border-white/30 hover:text-zinc-300 transition"
+          aria-label="Vista grilla"
+        >
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+            <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" />
+          </svg>
+        </button>
+        <button
+          onClick={() => {
+            window.dispatchEvent(new CustomEvent("viewchange", { detail: "list" }));
+          }}
+          className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 text-zinc-500 hover:border-white/30 hover:text-zinc-300 transition"
+          aria-label="Vista lista"
+        >
+          <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+            <line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
     </div>
   );
 }
