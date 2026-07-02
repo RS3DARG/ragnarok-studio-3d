@@ -98,7 +98,7 @@ export default async function CatalogoPage({
         </header>
 
         <div className="mb-6">
-          <CatalogSearch initialQuery={q} cat={cat} type={type} saga={saga} status={status} sagas={sagas} />
+          <CatalogSearch initialQuery={q} cat={cat} type={type} saga={saga} status={status} />
         </div>
 
         <CatalogFilters
