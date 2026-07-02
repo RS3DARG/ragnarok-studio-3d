@@ -1,12 +1,9 @@
 "use client";
-
 import { useState } from "react";
 import FigureCard from "@/components/FigureCard";
 import type { Figure } from "@/lib/types";
-
 export default function CatalogGrid({ items }: { items: Figure[] }) {
   const [view, setView] = useState<"grid" | "list">("grid");
-
   return (
     <>
       <div className="mb-4 flex justify-end gap-2">
@@ -39,7 +36,6 @@ export default function CatalogGrid({ items }: { items: Figure[] }) {
           </svg>
         </button>
       </div>
-
       {view === "grid" ? (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {items.map((f) => (
@@ -49,7 +45,7 @@ export default function CatalogGrid({ items }: { items: Figure[] }) {
       ) : (
         <div className="flex flex-col gap-3">
           {items.map((f) => (
-            
+            <a
               key={f.id}
               href={`/figura/${f.slug}`}
               className="flex items-center gap-4 rounded-2xl border border-white/5 bg-ink-900 p-3 transition hover:border-ember-400/30"
