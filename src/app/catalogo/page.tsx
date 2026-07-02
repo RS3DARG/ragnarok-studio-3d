@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import FigureCard from "@/components/FigureCard";
+import CatalogGrid from "@/components/CatalogGrid";
 import CatalogSearch from "@/components/CatalogSearch";
 import CatalogFilters from "@/components/CatalogFilters";
 import { getCatalog, getCategories, getAllSagas } from "@/lib/data";
@@ -112,11 +112,7 @@ export default async function CatalogoPage({
 
         {items.length > 0 ? (
           <>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-              {items.map((f) => (
-                <FigureCard key={f.id} figure={f} />
-              ))}
-            </div>
+            <CatalogGrid items={items} />
 
             {totalPages > 1 ? (
               <nav aria-label="Paginación" className="mt-12 flex items-center justify-center gap-1.5">
