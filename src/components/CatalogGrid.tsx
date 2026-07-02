@@ -61,7 +61,7 @@ export default function CatalogGrid({ items }: { items: Figure[] }) {
                 />
                 <FavoriteButton
                   figure={{ id: f.id, slug: f.slug, name: f.name, saga: f.saga, cover_url: f.cover_url }}
-                  variant="chip"
+                  variant="icon"
                 />
               </div>
             </div>
