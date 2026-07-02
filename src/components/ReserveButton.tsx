@@ -56,7 +56,7 @@ export default function ReserveButton({
         } ${className}`}
       >
         {Icon}
-        {active ? "Agregada a tu reserva" : "Agregar a reserva"}
+        {active ? "Agregada a tu reserva" : "Reservar"}
       </button>
     );
   }
@@ -73,7 +73,7 @@ export default function ReserveButton({
       } ${className}`}
     >
       {Icon}
-      {active ? "En reserva" : "Agregar a reserva"}
+      {active ? "En reserva" : "Reservar"}
     </button>
   );
 }
