@@ -16,6 +16,7 @@ export default function CatalogFilters({
   type: string;
   status: string;
   q: string;
+  saga: string;
   sagas: { name: string; slug: string; count: number }[];
   categories: { id: string; name: string; slug: string }[];
   sagas: string[];
