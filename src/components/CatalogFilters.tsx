@@ -19,7 +19,6 @@ export default function CatalogFilters({
   saga: string;
   sagas: { name: string; slug: string; count: number }[];
   categories: { id: string; name: string; slug: string }[];
-  sagas: string[];
 }) {
   const router = useRouter();
 
@@ -79,7 +78,6 @@ export default function CatalogFilters({
           <option key={st} value={st}>{STATUS_LABELS[st]}</option>
         ))}
       </select>
-
       <div className="flex gap-2 ml-auto">
         <button
           onClick={() => window.dispatchEvent(new CustomEvent("viewchange", { detail: "grid" }))}
