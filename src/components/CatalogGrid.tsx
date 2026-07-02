@@ -25,7 +25,7 @@ export default function CatalogGrid({ items }: { items: Figure[] }) {
       ) : (
         <div className="flex flex-col gap-3">
           {items.map((f) => (
-            
+             <a
               key={f.id}
               href={`/figura/${f.slug}`}
               className="flex items-center gap-4 rounded-2xl border border-white/5 bg-ink-900 p-3 transition hover:border-ember-400/30"
