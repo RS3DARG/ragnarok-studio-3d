@@ -17,7 +17,7 @@ export interface FigurePayload {
   status: FigureStatus;
   cover_url: string | null;
   featured: boolean;
-  gallery: string[]; // urls de la galería (sin contar la portada)
+  gallery: string[];
 }
 
 type ActionResult = { ok: boolean; error?: string; slug?: string };
@@ -39,8 +39,6 @@ async function uniqueSlug(
   let slug = slugify(base) || "figura";
   let candidate = slug;
   let n = 1;
-  // Busca colisiones de slug
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     const query = supabase.from("figures").select("id").eq("slug", candidate);
     const { data } = await query;
@@ -91,7 +89,6 @@ export async function saveFigure(payload: FigurePayload): Promise<ActionResult> 
       figureId = data.id;
     }
 
-    // Reescribe galería
     await supabase.from("figure_images").delete().eq("figure_id", figureId);
     if (payload.gallery.length) {
       const images = payload.gallery.map((url, i) => ({
@@ -129,27 +126,29 @@ export async function reorderFigure(id: string, direction: "up" | "down"): Promi
   try {
     const supabase = await getAuthedClient();
 
-    // Trae todas las figuras destacadas ordenadas
-    const { data: figures } = await supabase
+    const { data: current } = await supabase
       .from("figures")
       .select("id, sort_order")
-      .order("sort_order", { ascending: true })
-      .order("created_at", { ascending: false });
+      .eq("id", id)
+      .single();
 
-    if (!figures) return { ok: false, error: "No se encontraron figuras" };
+    if (!current) return { ok: false, error: "Figura no encontrada" };
 
-    const idx = figures.findIndex((f) => f.id === id);
-    if (idx === -1) return { ok: false, error: "Figura no encontrada" };
+    const currentOrder = current.sort_order ?? 0;
+    const swapOrder = direction === "up" ? currentOrder - 1 : currentOrder + 1;
 
-    const swapIdx = direction === "up" ? idx - 1 : idx + 1;
-    if (swapIdx < 0 || swapIdx >= figures.length) return { ok: true };
+    const { data: swap } = await supabase
+      .from("figures")
+      .select("id, sort_order")
+      .eq("sort_order", swapOrder)
+      .single();
 
-    const current = figures[idx];
-    const swap = figures[swapIdx];
+    if (!swap) return { ok: true };
 
-    // Intercambia sort_order
-    await supabase.from("figures").update({ sort_order: swap.sort_order ?? swapIdx }).eq("id", current.id);
-    await supabase.from("figures").update({ sort_order: current.sort_order ?? idx }).eq("id", swap.id);
+    await supabase.from("figures").upsert([
+      { id: current.id, sort_order: swapOrder },
+      { id: swap.id, sort_order: currentOrder },
+    ]);
 
     revalidatePath("/");
     revalidatePath("/admin/figuras");
@@ -177,7 +176,6 @@ export async function setSortOrder(id: string, newOrder: number): Promise<Action
     const oldOrder = current.sort_order ?? 0;
     const clampedNew = Math.max(1, Math.min(newOrder, figures.length));
 
-    // Reordena: mueve todos los afectados
     const updates = figures.map((f) => {
       if (f.id === id) return { id: f.id, sort_order: clampedNew };
       const o = f.sort_order ?? 0;
@@ -190,9 +188,7 @@ export async function setSortOrder(id: string, newOrder: number): Promise<Action
       return { id: f.id, sort_order: o };
     });
 
-    for (const u of updates) {
-      await supabase.from("figures").update({ sort_order: u.sort_order }).eq("id", u.id);
-    }
+    await supabase.from("figures").upsert(updates);
 
     revalidatePath("/");
     revalidatePath("/admin/figuras");
