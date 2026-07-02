@@ -101,8 +101,7 @@ export default async function CatalogoPage({
           <CatalogSearch initialQuery={q} cat={cat} type={type} saga={saga} status={status} sagas={sagas} />
         </div>
 
-        <div className="flex items-center justify-between gap-4">
-          <CatalogFilters
+        <CatalogFilters
           cat={cat}
           type={type}
           status={status}
@@ -111,8 +110,6 @@ export default async function CatalogoPage({
           categories={categories}
           sagas={sagas}
         />
-          <CatalogViewToggle />
-        </div>
 
         {items.length > 0 ? (
           <>
