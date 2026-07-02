@@ -16,7 +16,7 @@ export default function CatalogFilters({
   type: string;
   status: string;
   q: string;
-  saga: string;
+  sagas: { name: string; slug: string; count: number }[];
   categories: { id: string; name: string; slug: string }[];
   sagas: string[];
 }) {
@@ -45,7 +45,7 @@ export default function CatalogFilters({
       >
         <option value="">Todas las sagas</option>
         {sagas.map((s) => (
-          <option key={s} value={s}>{s}</option>
+          <option key={s.slug} value={s.name}>{s.name}</option>
         ))}
       </select>
       <select
