@@ -145,10 +145,15 @@ export async function reorderFigure(id: string, direction: "up" | "down"): Promi
 
     if (!swap) return { ok: true };
 
-    await supabase.from("figures").upsert([
-      { id: current.id, sort_order: swapOrder },
-      { id: swap.id, sort_order: currentOrder },
-    ]);
+    await supabase
+      .from("figures")
+      .update({ sort_order: swapOrder })
+      .eq("id", current.id);
+
+    await supabase
+      .from("figures")
+      .update({ sort_order: currentOrder })
+      .eq("id", swap.id);
 
     revalidatePath("/");
     revalidatePath("/admin/figuras");
@@ -188,7 +193,11 @@ export async function setSortOrder(id: string, newOrder: number): Promise<Action
       return { id: f.id, sort_order: o };
     });
 
-    await supabase.from("figures").upsert(updates);
+    await Promise.all(
+      updates.map((u) =>
+        supabase.from("figures").update({ sort_order: u.sort_order }).eq("id", u.id)
+      )
+    );
 
     revalidatePath("/");
     revalidatePath("/admin/figuras");
