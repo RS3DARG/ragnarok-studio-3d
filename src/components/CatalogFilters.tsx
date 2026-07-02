@@ -1,5 +1,4 @@
 "use client";
-
 import { useRouter } from "next/navigation";
 import { FIGURE_TYPES, STATUS_LABELS } from "@/lib/types";
 import type { FigureStatus } from "@/lib/types";
@@ -11,6 +10,7 @@ export default function CatalogFilters({
   q,
   saga,
   categories,
+  sagas,
 }: {
   cat: string;
   type: string;
@@ -18,6 +18,7 @@ export default function CatalogFilters({
   q: string;
   saga: string;
   categories: { id: string; name: string; slug: string }[];
+  sagas: string[];
 }) {
   const router = useRouter();
 
@@ -36,7 +37,17 @@ export default function CatalogFilters({
   const selectClass = "rounded-xl border border-white/10 bg-ink-850 px-4 py-3 text-white outline-none transition focus:border-ember-400 cursor-pointer";
 
   return (
-    <div className="mb-8 flex flex-wrap items-center justify-between gap-3">
+    <div className="mb-8 flex flex-wrap items-center gap-3">
+      <select
+        value={saga}
+        onChange={(e) => router.push(buildQuery({ saga: e.target.value, page: "1" }))}
+        className={selectClass}
+      >
+        <option value="">Todas las sagas</option>
+        {sagas.map((s) => (
+          <option key={s} value={s}>{s}</option>
+        ))}
+      </select>
       <select
         value={cat}
         onChange={(e) => router.push(buildQuery({ cat: e.target.value, page: "1" }))}
@@ -47,7 +58,6 @@ export default function CatalogFilters({
           <option key={c.id} value={c.slug}>{c.name}</option>
         ))}
       </select>
-
       <select
         value={type}
         onChange={(e) => router.push(buildQuery({ type: e.target.value, page: "1" }))}
@@ -58,7 +68,6 @@ export default function CatalogFilters({
           <option key={t} value={t}>{t}</option>
         ))}
       </select>
-
       <select
         value={status}
         onChange={(e) => router.push(buildQuery({ status: e.target.value, page: "1" }))}
@@ -69,14 +78,10 @@ export default function CatalogFilters({
           <option key={st} value={st}>{STATUS_LABELS[st]}</option>
         ))}
       </select>
-<div className="flex gap-2 ml-auto">
+
+      <div className="flex gap-2 ml-auto">
         <button
-          onClick={() => {
-            const url = new URL(window.location.href);
-            url.searchParams.set("view", "grid");
-            window.history.replaceState({}, "", url);
-            window.dispatchEvent(new CustomEvent("viewchange", { detail: "grid" }));
-          }}
+          onClick={() => window.dispatchEvent(new CustomEvent("viewchange", { detail: "grid" }))}
           className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 text-zinc-500 hover:border-white/30 hover:text-zinc-300 transition"
           aria-label="Vista grilla"
         >
@@ -86,9 +91,7 @@ export default function CatalogFilters({
           </svg>
         </button>
         <button
-          onClick={() => {
-            window.dispatchEvent(new CustomEvent("viewchange", { detail: "list" }));
-          }}
+          onClick={() => window.dispatchEvent(new CustomEvent("viewchange", { detail: "list" }))}
           className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 text-zinc-500 hover:border-white/30 hover:text-zinc-300 transition"
           aria-label="Vista lista"
         >
