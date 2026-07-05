@@ -21,10 +21,10 @@ export default function SagaCards({ cards, counts }: Props) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mb-10">
           <p className="font-display text-sm uppercase tracking-[0.3em] text-ember-400">
-            Colección
+            Sagas
           </p>
           <h2 className="mt-1 font-display text-3xl font-bold uppercase tracking-wide text-white sm:text-4xl">
-            Explorá por saga
+            Todas las cards
           </h2>
         </div>
 
@@ -67,11 +67,11 @@ export default function SagaCards({ cards, counts }: Props) {
           })}
         </div>
 
-        <Link
-          href="/sagas"
+       <Link
+          href="/catalogo"
           className="mt-8 flex w-full items-center justify-center rounded-2xl border border-white/10 py-4 text-sm font-medium text-zinc-400 transition hover:border-ember-400/40 hover:text-ember-300"
         >
-          Ver todas las sagas (90+) →
+          Ver catálogo completo →
         </Link>
       </div>
     </section>
