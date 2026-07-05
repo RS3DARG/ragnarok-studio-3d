@@ -123,14 +123,7 @@ export default function CatalogExplorer({
             ) : null}
           </div>
 
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-2 text-sm text-zinc-500">
-            <span>Ejemplos:</span>
-            {examples.map((ex) => (
-              <button key={ex} type="button" onClick={() => search(ex)} className="rounded-full border border-white/10 px-3 py-1 transition hover:border-ember-400 hover:text-ember-300">
-                {ex}
-              </button>
-            ))}
-          </div>
+          
         </div>
 
         <div className="mb-6 flex items-center justify-between gap-4 border-t border-white/5 pt-10">
