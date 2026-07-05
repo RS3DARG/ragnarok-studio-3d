@@ -38,7 +38,7 @@ export default function SagaCards({ cards, counts }: Props) {
                 href={href}
                 className="group relative overflow-hidden rounded-2xl border border-white/5 bg-ink-900 transition-all duration-300 hover:border-ember-400/30"
               >
-                <div className="relative aspect-square overflow-hidden bg-ink-850">
+                <div className="relative aspect-video overflow-hidden bg-ink-850">
                   {card.image_url ? (
                     <img
                       src={card.image_url}

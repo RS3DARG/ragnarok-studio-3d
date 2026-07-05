@@ -9,6 +9,7 @@ const LINKS = [
   { href: "/admin", label: "Dashboard", exact: true },
   { href: "/admin/figuras", label: "Figuras" },
   { href: "/admin/categorias", label: "Categorías" },
+  { href: "/admin/sagas", label: "Sagas" },
   { href: "/admin/proximamente", label: "Próximamente" },
   { href: "/admin/faq", label: "FAQ" },
   { href: "/admin/hero", label: "Hero Premium" },
