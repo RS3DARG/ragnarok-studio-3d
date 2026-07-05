@@ -6,6 +6,7 @@ import ComingSoon from "@/components/ComingSoon";
 import Newsletter from "@/components/Newsletter";
 import InstagramSection from "@/components/InstagramSection";
 import PaymentMethods from "@/components/PaymentMethods";
+import SagaCards from "@/components/SagaCards";
 import Faq from "@/components/Faq";
 import HowItWorks from "@/components/HowItWorks";
 import {
@@ -15,7 +16,8 @@ import {
   getUpcoming,
   getFaq,
   getSettings,
-
+  getSagaCards,
+  getAllSagas,
 } from "@/lib/data";
 import { BRAND, toSavedFigure } from "@/lib/utils";
 import { parseHeroSlides } from "@/lib/hero";
@@ -33,7 +35,7 @@ function parseList(raw: string | undefined): string[] {
 }
 
 export default async function HomePage() {
-  const [previewFigures, featured, totalCount, upcoming, faq, settings] =
+  const [previewFigures, featured, totalCount, upcoming, faq, settings, sagaCards, allSagas] =
     await Promise.all([
       getFiguresPreview(8),
       getFeaturedFigures(5),
@@ -41,6 +43,8 @@ export default async function HomePage() {
       getUpcoming(),
       getFaq(),
       getSettings(),
+      getSagaCards(),
+      getAllSagas(),
     ]);
 
 	console.log("hero_background_image:", settings.hero_background_image);
@@ -96,6 +100,10 @@ export default async function HomePage() {
   const howItWorksTitle = settings.how_it_works_title || "¿Cómo funciona?";
   const howItWorksSubtitle = settings.how_it_works_subtitle || "Tres pasos simples para tener tu figura coleccionable";
 
+  const sagaCounts = Object.fromEntries(
+    allSagas.map((s) => [s.name, s.count])
+  );
+
   return (
     <>
       <Header />
@@ -126,6 +134,7 @@ export default async function HomePage() {
           title={howItWorksTitle}
           subtitle={howItWorksSubtitle}
         />
+       <SagaCards cards={sagaCards} counts={sagaCounts} />
         <CatalogExplorer figures={previewFigures} totalCount={totalCount} />
         <div id="proximamente">
           <ComingSoon items={upcoming} settings={settings} />

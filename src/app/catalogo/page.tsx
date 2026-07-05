@@ -29,7 +29,7 @@ export const metadata: Metadata = {
 
 export const revalidate = 60;
 
-const PER_PAGE = 20;
+const PER_PAGE = 40;
 
 type SearchParams = {
   page?: string;

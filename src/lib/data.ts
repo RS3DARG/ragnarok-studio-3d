@@ -400,3 +400,13 @@ export async function getReservations(): Promise<Reservation[]> {
     .order("created_at", { ascending: false });
   return (data as Reservation[]) ?? [];
 }
+
+export async function getSagaCards() {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("saga_cards")
+    .select("*")
+    .eq("visible", true)
+    .order("sort_order", { ascending: true });
+  return data ?? [];
+}
