@@ -21,10 +21,10 @@ export default function SagaCards({ cards, counts }: Props) {
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
         <div className="mb-10">
           <p className="font-display text-sm uppercase tracking-[0.3em] text-ember-400">
-            Sagas
+            Colección
           </p>
           <h2 className="mt-1 font-display text-3xl font-bold uppercase tracking-wide text-white sm:text-4xl">
-            Todas las cards
+            Sagas
           </h2>
         </div>
 
