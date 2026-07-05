@@ -23,7 +23,7 @@ import { BRAND, toSavedFigure } from "@/lib/utils";
 import { parseHeroSlides } from "@/lib/hero";
 
 // Revalida los datos públicos cada 60s (ISR)
-export const revalidate = 60;
+export const revalidate = 0;
 
 function parseList(raw: string | undefined): string[] {
   try {
@@ -100,6 +100,8 @@ export default async function HomePage() {
   const howItWorksTitle = settings.how_it_works_title || "¿Cómo funciona?";
   const howItWorksSubtitle = settings.how_it_works_subtitle || "Tres pasos simples para tener tu figura coleccionable";
 
+  console.log("sagaCards:", JSON.stringify(sagaCards));
+  console.log("sagaCards length:", sagaCards.length);
   const sagaCounts = Object.fromEntries(
     allSagas.map((s) => [s.name, s.count])
   );
