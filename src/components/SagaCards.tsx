@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { slugify } from "@/lib/utils";
 
 interface SagaCard {
   id: string;
@@ -7,15 +6,12 @@ interface SagaCard {
   slug: string;
   image_url: string | null;
 }
-
 interface Props {
   cards: SagaCard[];
   counts: Record<string, number>;
 }
-
 export default function SagaCards({ cards, counts }: Props) {
   if (!cards.length) return null;
-
   return (
     <section className="border-t border-white/5 bg-ink-950 py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6">
@@ -27,11 +23,10 @@ export default function SagaCards({ cards, counts }: Props) {
             Sagas
           </h2>
         </div>
-
         <div className="flex flex-wrap justify-center gap-4">
           {cards.map((card) => {
-            const count = counts[card.name] ?? 0;
-            const href = `/saga/${slugify(card.name)}`;
+            const count = counts[card.id] ?? 0;
+            const href = `/saga/${card.slug}`;
             return (
               <Link
                 key={card.id}
@@ -66,8 +61,7 @@ export default function SagaCards({ cards, counts }: Props) {
             );
           })}
         </div>
-
-       <Link
+        <Link
           href="/catalogo"
           className="mt-8 flex w-full items-center justify-center rounded-2xl border border-white/10 py-4 text-sm font-medium text-zinc-400 transition hover:border-ember-400/40 hover:text-ember-300"
         >

@@ -38,7 +38,6 @@ export async function getFigureBySlug(slug: string): Promise<Figure | null> {
 
   if (!data) return null;
   const figure = data as Figure;
-  // ordena galería
   figure.images = (figure.images ?? []).sort(
     (a, b) => a.sort_order - b.sort_order
   );
@@ -52,10 +51,6 @@ export async function getAllFigureSlugs(): Promise<string[]> {
 }
 
 /* --------------------------- RELACIONADAS ------------------------------- */
-/**
- * Figuras relacionadas: primero misma saga, luego completa con misma categoría.
- * Excluye la figura actual. Devuelve entre 0 y `limit` (por defecto 6).
- */
 export async function getRelatedFigures(
   figure: Figure,
   limit = 6
@@ -64,7 +59,6 @@ export async function getRelatedFigures(
   const collected: Figure[] = [];
   const seen = new Set<string>([figure.id]);
 
-  // 1) Misma saga
   if (figure.saga) {
     const { data } = await supabase
       .from("figures")
@@ -81,7 +75,6 @@ export async function getRelatedFigures(
     }
   }
 
-  // 2) Completa con misma categoría si faltan
   if (collected.length < limit && figure.category_id) {
     const { data } = await supabase
       .from("figures")
@@ -104,7 +97,7 @@ export async function getRelatedFigures(
 
 /* --------------------------------- SAGAS -------------------------------- */
 /** Devuelve las sagas distintas con su slug y cantidad de figuras. */
-export async function getAllSagas(): Promise<
+export async function getAllSagas(): Promise
   { name: string; slug: string; count: number }[]
 > {
   const supabase = await createClient();
@@ -125,11 +118,25 @@ export async function getAllSagas(): Promise<
     .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-/** Figuras de una saga, resuelta por su slug (la saga es texto libre). */
+/**
+ * Figuras de una saga (o grupo de sagas), resuelta por el slug de la card.
+ * 1) Busca primero en saga_cards (soporta agrupar varias sagas reales bajo
+ *    una sola card, ej. "Películas" = Terminator + Karate Kid + ...).
+ * 2) Si no hay card con ese slug, cae al comportamiento anterior: matchea
+ *    directamente contra el campo saga de las figuras.
+ */
 export async function getFiguresBySagaSlug(
   sagaSlug: string
 ): Promise<{ saga: string; figures: Figure[] } | null> {
   const supabase = await createClient();
+
+  // 1) ¿Existe una saga_card con este slug?
+  const { data: card } = await supabase
+    .from("saga_cards")
+    .select("name, filter_sagas")
+    .eq("slug", sagaSlug)
+    .maybeSingle();
+
   const { data } = await supabase
     .from("figures")
     .select("*, category:categories(*)")
@@ -137,9 +144,17 @@ export async function getFiguresBySagaSlug(
     .order("created_at", { ascending: false });
 
   const figures = (data as Figure[]) ?? [];
-  const matches = figures.filter(
-    (f) => f.saga && slugify(f.saga) === sagaSlug
-  );
+  let matches: Figure[] = [];
+  let displayName = "";
+
+  if (card && Array.isArray(card.filter_sagas) && card.filter_sagas.length > 0) {
+    matches = figures.filter((f) => f.saga && card.filter_sagas.includes(f.saga));
+    displayName = card.name;
+  } else {
+    matches = figures.filter((f) => f.saga && slugify(f.saga) === sagaSlug);
+    displayName = matches[0]?.saga ?? "";
+  }
+
   if (matches.length === 0) return null;
 
   const typeOrder: Record<string, number> = {
@@ -154,7 +169,7 @@ export async function getFiguresBySagaSlug(
     return orderA - orderB;
   });
 
-  return { saga: matches[0].saga as string, figures: matches };
+  return { saga: displayName, figures: matches };
 }
 
 /* ----------------------------- PRÓXIMAMENTE ----------------------------- */
@@ -230,10 +245,6 @@ export interface CatalogResult {
   totalPages: number;
 }
 
-/**
- * Trae figuras paginadas desde Supabase (no carga todas a la vez).
- * Aplica búsqueda por nombre/saga, filtro por categoría y por tipo.
- */
 export async function getCatalog(
   params: CatalogParams = {}
 ): Promise<CatalogResult> {
@@ -241,7 +252,6 @@ export async function getCatalog(
   const perPage = Math.min(60, Math.max(1, params.perPage ?? 20));
   const page = Math.max(1, params.page ?? 1);
 
-  // Resuelve slug de categoría -> id
   let categoryId: string | null = null;
   if (params.categorySlug) {
     const { data: cat } = await supabase
@@ -250,20 +260,15 @@ export async function getCatalog(
       .eq("slug", params.categorySlug)
       .maybeSingle();
     categoryId = (cat as { id: string } | null)?.id ?? null;
-    // Categoría inexistente => sin resultados
     if (!categoryId) {
       return { items: [], total: 0, page, perPage, totalPages: 1 };
     }
   }
 
-  // Búsqueda con tolerancia a errores de tipeo (pg_trgm vía RPC).
-  // Si hay término de búsqueda usamos la función search_figures; si no, una
-  // consulta paginada normal en servidor.
   const q = (params.q ?? "").trim();
   if (q) {
     const { data, error } = await supabase.rpc("search_figures", { p_q: q });
     let rows = (!error && Array.isArray(data) ? (data as Figure[]) : []) ?? [];
-    // Fallback a ilike si la función todavía no existe en la base
     if (error) {
       const term = `%${q}%`;
       const { data: d2 } = await supabase
@@ -273,7 +278,6 @@ export async function getCatalog(
         .order("created_at", { ascending: false });
       rows = (d2 as Figure[]) ?? [];
     }
-    // Filtros adicionales en memoria (el set ya viene acotado por la búsqueda)
     if (categoryId) rows = rows.filter((f) => f.category_id === categoryId);
     if (params.type) rows = rows.filter((f) => f.figure_type === params.type);
     if (params.saga) rows = rows.filter((f) => f.saga === params.saga);
@@ -378,7 +382,7 @@ export interface NewsletterSubscriber {
   created_at: string;
 }
 
-export async function getNewsletterSubscribers(): Promise<
+export async function getNewsletterSubscribers(): Promise
   NewsletterSubscriber[]
 > {
   const supabase = await createClient();
@@ -413,12 +417,51 @@ export async function getReservations(): Promise<Reservation[]> {
   return (data as Reservation[]) ?? [];
 }
 
-export async function getSagaCards() {
+/* ------------------------------ SAGA CARDS ------------------------------- */
+export interface SagaCardRow {
+  id: string;
+  name: string;
+  slug: string;
+  image_url: string | null;
+  sort_order: number;
+  visible: boolean;
+  filter_sagas: string[] | null;
+}
+
+export async function getSagaCards(): Promise<SagaCardRow[]> {
   const supabase = await createClient();
   const { data } = await supabase
     .from("saga_cards")
     .select("*")
     .eq("visible", true)
     .order("sort_order", { ascending: true });
-  return data ?? [];
+  return (data as SagaCardRow[]) ?? [];
+}
+
+/**
+ * Cuenta de figuras por cada saga_card, sumando todas las sagas reales
+ * incluidas en su filter_sagas (soporta cards que agrupan varias sagas).
+ */
+export async function getSagaCardCounts(
+  cards: SagaCardRow[]
+): Promise<Record<string, number>> {
+  const supabase = await createClient();
+  const { data } = await supabase
+    .from("figures")
+    .select("saga")
+    .not("saga", "is", null);
+
+  const rawCounts = new Map<string, number>();
+  (data ?? []).forEach((row: { saga: string | null }) => {
+    const name = (row.saga ?? "").trim();
+    if (!name) return;
+    rawCounts.set(name, (rawCounts.get(name) ?? 0) + 1);
+  });
+
+  const result: Record<string, number> = {};
+  for (const card of cards) {
+    const sagas = card.filter_sagas?.length ? card.filter_sagas : [card.name];
+    result[card.id] = sagas.reduce((sum, s) => sum + (rawCounts.get(s) ?? 0), 0);
+  }
+  return result;
 }

@@ -18,6 +18,7 @@ import {
   getSettings,
   getSagaCards,
   getAllSagas,
+  getSagaCardCounts,
 } from "@/lib/data";
 import { BRAND, toSavedFigure } from "@/lib/utils";
 import { parseHeroSlides } from "@/lib/hero";
@@ -102,9 +103,7 @@ export default async function HomePage() {
 
   console.log("sagaCards:", JSON.stringify(sagaCards));
   console.log("sagaCards length:", sagaCards.length);
-  const sagaCounts = Object.fromEntries(
-    allSagas.map((s) => [s.name, s.count])
-  );
+  const sagaCounts = await getSagaCardCounts(sagaCards);
 
   return (
     <>
