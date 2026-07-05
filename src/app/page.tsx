@@ -131,19 +131,21 @@ export default async function HomePage() {
           instagramUrl={instagramUrl}
           instagramEnabled={instagramEnabled}
         />
+        <SagaCards cards={sagaCards} counts={sagaCounts} />
+        <CatalogExplorer figures={previewFigures} totalCount={totalCount} />
         <HowItWorks
           enabled={howItWorksEnabled}
           title={howItWorksTitle}
           subtitle={howItWorksSubtitle}
         />
-       <SagaCards cards={sagaCards} counts={sagaCounts} />
-        <CatalogExplorer figures={previewFigures} totalCount={totalCount} />
         <div id="proximamente">
           <ComingSoon items={upcoming} settings={settings} />
         </div>
-        <Newsletter settings={settings} />
         <div id="pagos">
           <PaymentMethods intro={paymentIntro} methods={paymentMethods} />
+        </div>
+        <div id="faq">
+          <Faq items={faq} />
         </div>
         {/*
 <InstagramSection
@@ -153,9 +155,7 @@ export default async function HomePage() {
   enabled={false}
 />
 */}
-        <div id="faq">
-  <Faq items={faq} />
-</div>
+        <Newsletter settings={settings} />
       </main>
       <Footer />
     </>
