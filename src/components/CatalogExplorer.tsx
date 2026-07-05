@@ -126,8 +126,8 @@ export default function CatalogExplorer({
           
         </div>
 
-        <div className="mb-6 flex items-center justify-between gap-4 border-t border-white/5 pt-10">
-          <p className="text-sm text-zinc-500">Nuestra selección del momento</p>
+        <div className="mb-6 flex items-center justify-between gap-4 pt-6">
+          <p className="text-sm text-zinc-500">Figuras destacadas del mes</p>
           <Link href="/catalogo" className="hidden shrink-0 items-center gap-2 rounded-xl border border-white/10 px-4 py-2.5 text-sm font-medium text-zinc-200 transition hover:border-ember-400 hover:text-ember-300 sm:inline-flex">
             Ver catálogo completo
             <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
