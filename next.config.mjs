@@ -11,11 +11,11 @@ try {
 const csp = [
   "default-src 'self'",
   // Next inyecta scripts inline en producción; sin nonce usamos 'unsafe-inline'.
-  "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+ "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "font-src 'self' data:",
-  "connect-src 'self' https://*.supabase.co wss://*.supabase.co",
+ "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://www.google-analytics.com https://analytics.google.com https://stats.g.doubleclick.net",
   "media-src 'self' https: blob:",
   "frame-src https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com",
   "object-src 'none'",
