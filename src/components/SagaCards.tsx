@@ -28,7 +28,7 @@ export default function SagaCards({ cards, counts }: Props) {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
           {cards.map((card) => {
             const count = counts[card.name] ?? 0;
             const href = `/saga/${slugify(card.name)}`;
@@ -54,11 +54,11 @@ export default function SagaCards({ cards, counts }: Props) {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-transparent to-transparent" />
                 </div>
-                <div className="p-4">
-                  <p className="font-display font-bold uppercase tracking-wide text-white">
+                <div className="p-2.5">
+                  <p className="font-display text-xs font-bold uppercase tracking-wide text-white truncate">
                     {card.name}
                   </p>
-                  <p className="mt-1 text-sm text-zinc-500">
+                  <p className="mt-0.5 text-xs text-zinc-500">
                     {count} {count === 1 ? "figura" : "figuras"}
                   </p>
                 </div>
