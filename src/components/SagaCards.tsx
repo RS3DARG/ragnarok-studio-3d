@@ -28,7 +28,7 @@ export default function SagaCards({ cards, counts }: Props) {
           </h2>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8">
+        <div className="flex flex-wrap justify-center gap-4">
           {cards.map((card) => {
             const count = counts[card.name] ?? 0;
             const href = `/saga/${slugify(card.name)}`;
@@ -36,7 +36,7 @@ export default function SagaCards({ cards, counts }: Props) {
               <Link
                 key={card.id}
                 href={href}
-                className="group relative overflow-hidden rounded-2xl border border-white/5 bg-ink-900 transition-all duration-300 hover:border-ember-400/30"
+                className="group relative w-[calc(50%-8px)] overflow-hidden rounded-2xl border border-white/5 bg-ink-900 transition-all duration-300 hover:border-ember-400/30 sm:w-[calc(33.333%-11px)] lg:w-[calc(16.666%-14px)]"
               >
                 <div className="relative aspect-video overflow-hidden bg-ink-850">
                   {card.image_url ? (
