@@ -142,6 +142,18 @@ export async function getFiguresBySagaSlug(
   );
   if (matches.length === 0) return null;
 
+  const typeOrder: Record<string, number> = {
+    Escultura: 1,
+    Busto: 2,
+    Diorama: 3,
+  };
+
+  matches.sort((a, b) => {
+    const orderA = typeOrder[a.figure_type ?? ""] ?? 99;
+    const orderB = typeOrder[b.figure_type ?? ""] ?? 99;
+    return orderA - orderB;
+  });
+
   return { saga: matches[0].saga as string, figures: matches };
 }
 
