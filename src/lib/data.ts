@@ -97,7 +97,7 @@ export async function getRelatedFigures(
 
 /* --------------------------------- SAGAS -------------------------------- */
 /** Devuelve las sagas distintas con su slug y cantidad de figuras. */
-export async function getAllSagas(): Promise
+export async function getAllSagas(): Promise<
   { name: string; slug: string; count: number }[]
 > {
   const supabase = await createClient();
@@ -382,7 +382,7 @@ export interface NewsletterSubscriber {
   created_at: string;
 }
 
-export async function getNewsletterSubscribers(): Promise
+export async function getNewsletterSubscribers(): Promise<
   NewsletterSubscriber[]
 > {
   const supabase = await createClient();
