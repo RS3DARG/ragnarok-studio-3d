@@ -60,21 +60,18 @@ export default function CatalogExplorer({
   return (
     <section id="catalogo" className="border-y border-white/5 bg-ink-900">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6">
-        <div className="mb-10 text-center">
+        <div className="mb-8 text-center">
           <p className="font-display text-sm uppercase tracking-[0.3em] text-ember-400">Colección</p>
           <h2 className="mt-1 font-display text-3xl font-bold uppercase tracking-wide text-white sm:text-4xl">
             Catálogo
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-zinc-400">
-            Buscá por personaje, saga o franquicia, o explorá directamente nuestra selección.
-          </p>
 
-          <div ref={wrapperRef} id="buscador" className="relative mx-auto mt-8 max-w-2xl">
+          <div ref={wrapperRef} id="buscador" className="relative mx-auto mt-6 max-w-xl">
             <form
               onSubmit={(e) => { e.preventDefault(); search(query); }}
               className="flex items-center"
             >
-              <svg className="pointer-events-none absolute left-5 h-6 w-6 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <svg className="pointer-events-none absolute left-4 h-5 w-5 text-zinc-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
                 <circle cx="11" cy="11" r="7" />
                 <path d="m20 20-3.5-3.5" />
               </svg>
@@ -85,9 +82,9 @@ export default function CatalogExplorer({
                 onFocus={() => suggestions.length > 0 && setShowSuggestions(true)}
                 placeholder="Buscar personaje, saga o franquicia..."
                 aria-label="Buscar figura"
-                className="w-full rounded-2xl border border-white/10 bg-ink-850 py-5 pl-14 pr-32 text-lg text-white placeholder-zinc-500 shadow-card outline-none transition focus:border-ember-400 focus:ring-2 focus:ring-ember-500/30"
+                className="w-full rounded-xl border border-white/10 bg-ink-850 py-3.5 pl-12 pr-28 text-white placeholder-zinc-500 shadow-card outline-none transition focus:border-ember-400 focus:ring-2 focus:ring-ember-500/30"
               />
-              <button type="submit" className="absolute right-2 rounded-xl bg-ember-500 px-5 py-3 font-semibold text-black transition hover:bg-ember-400">
+              <button type="submit" className="absolute right-1.5 rounded-lg bg-ember-500 px-4 py-2 text-sm font-semibold text-black transition hover:bg-ember-400">
                 Buscar
               </button>
             </form>
