@@ -44,11 +44,11 @@ const launchTitle =
 )}
 </div>
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      <div className="flex flex-wrap justify-center gap-4">
         {items.map((item) => (
           <article
             key={item.id}
-            className="group relative flex flex-col overflow-hidden rounded-2xl bg-ink-850 card-ring"
+            className="group relative flex w-[calc(50%-0.5rem)] flex-col overflow-hidden rounded-2xl bg-ink-850 card-ring sm:w-[calc(33.333%-0.667rem)] lg:w-[calc(25%-0.75rem)]"
           >
             <div className="relative aspect-[4/5] overflow-hidden">
               <div className="absolute inset-0 grayscale transition duration-500 group-hover:grayscale-0">
